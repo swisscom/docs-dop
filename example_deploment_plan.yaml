@@ -1,65 +1,107 @@
 clouds:
-  cloud1:
-    type:
-    endpoint:
+  management:
+    type: rhev
+    endpoint: https://rhev.swisscom.ch/api/
     credentials:
-      username:
-      password:
-  cloud2:
-    ...
+      username: azuber
+      password: dhahwuzq38q2ou32qd
+  lamp:
+    type: openstack
+    endpoint: https://openstack.swisscom.ch/api/
+    credentials:
+      username: azuber
+      password: dhahwuzq38q2ou32qd
 
 nodes:
-  node1:
+
+  mysql01.example.com:
+    cloud: lamp
+    image: rhel6
+    nets:
+      int: dhcp
+    flavor: medium
+    disks:
+      database: 30G
+
+  web01.example.com:
+    cloud: lamp
     image: rhel6
     nets:
       int: dhcp
     flavor: small
-    disks:
-      disk1: 10G
-      disk2: 5G
-  node2:
-    image: win2008
+
+  web01.example.com:
+    cloud: lamp
+    image: rhel6
     nets:
-      int: 10.1.2.3
+      int: dhcp
+    flavor: small
+
+  haproxy01.example.com:
+    cloud: lamp
+    image: rhel6
+    nets:
+      int: dhcp
+    flavor: small
+
+  haproxy02.example.com:
+    cloud: lamp
+    image: rhel6
+    nets:
+      int: dhcp
+    flavor: small
 
 configuration:
   nodes:
-    node1:
+    mysql01.example.com:
+      sc_role: mysql
+    web01.example.com:
       sc_role: httpd
-    node2:
-      sc_role: mssql
+    web02.example.com:
+      sc_role: httpd
+    haproxy01.example.com:
+      sc_role: haproxy
+    haproxy01.example.com:
+      sc_role: haproxy
   roles:
-    httpd:
-      use_ssl: true
-    mssql:
-      admin_pw: foo
+    mysql:
+      mysql::default_database:
+         name: mydatabase
+         user: myuser
+         password: blabla
 
 plan:
   max_in_flight: 3
 
 steps:
-  - name: step1
-    roles:
-      - httpd
-    nodes:
-      - node2
-    command: run_puppet
 
-  - name: step2
-    roles:
-      - mssql
-    nodes: []
-    command: reboot
-    arguments: {}
-    env:
-      ENV1: foo
-      ENV2: bla
-    node_verify_cmd:  (runs on the node to verify if the command needs to run)
-    dop_verify_cmd: (runs on dop to verify the state)
-    expect_exit_code: 0 / [ \d ] / any
+    - name: setup_database
+      nodes:
+          - mysql01
+      command: run_puppet
 
-  - name: step3
-    nodes: ALL
-    ...
+    - name: setup_webserver
+      roles:
+          - httpd
+      command: run_puppet
 
+    - name: setup_haproxy
+      roles:
+          - haproxy
+      command: run_puppet
+
+    - name: setup_haproxy
+      nodes: ALL
+      command: reboot
+
+    - name: fake_run
+      nodes: all
+      command: /tmp/test
+      arguments: {}
+      env:
+          ENV1: foo
+          ENV2: bla
+      node_verify_cmd:  (runs on the node to verify if the command needs to run)
+      dop_verify_cmd: (runs on dop to verify the state)
+      expect_exit_code: 0 / [ \d ] / any
 
