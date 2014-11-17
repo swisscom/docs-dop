@@ -1,0 +1,65 @@
+clouds:
+  cloud1:
+    type:
+    endpoint:
+    credentials:
+      username:
+      password:
+  cloud2:
+    ...
+
+nodes:
+  node1:
+    image: rhel6
+    nets:
+      int: dhcp
+    flavor: small
+    disks:
+      disk1: 10G
+      disk2: 5G
+  node2:
+    image: win2008
+    nets:
+      int: 10.1.2.3
+
+configuration:
+  nodes:
+    node1:
+      sc_role: httpd
+    node2:
+      sc_role: mssql
+  roles:
+    httpd:
+      use_ssl: true
+    mssql:
+      admin_pw: foo
+
+plan:
+  max_in_flight: 3
+
+steps:
+  - name: step1
+    roles:
+      - httpd
+    nodes:
+      - node2
+    command: run_puppet
+
+  - name: step2
+    roles:
+      - mssql
+    nodes: []
+    command: reboot
+    arguments: {}
+    env:
+      ENV1: foo
+      ENV2: bla
+    node_verify_cmd:  (runs on the node to verify if the command needs to run)
+    dop_verify_cmd: (runs on dop to verify the state)
+    expect_exit_code: 0 / [ \d ] / any
+
+  - name: step3
+    nodes: ALL
+    ...
+
+
