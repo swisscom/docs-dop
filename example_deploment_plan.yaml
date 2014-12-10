@@ -30,7 +30,7 @@ nodes:
       int: dhcp
     flavor: small
 
-  web01.example.com:
+  web02.example.com:
     cloud: lamp
     image: rhel6
     nets:
@@ -61,7 +61,7 @@ configuration:
       sc_role: httpd
     haproxy01.example.com:
       sc_role: haproxy
-    haproxy01.example.com:
+    haproxy02.example.com:
       sc_role: haproxy
   roles:
     mysql:
@@ -77,7 +77,7 @@ steps:
 
     - name: setup_database
       nodes:
-          - mysql01
+          - mysql01.example.com
       command: run_puppet
 
     - name: setup_webserver
@@ -90,18 +90,25 @@ steps:
           - haproxy
       command: run_puppet
 
-    - name: setup_haproxy
+    - name: reboot_all
       nodes: ALL
       command: reboot
 
     - name: fake_run
       nodes: all
-      command: /tmp/test
-      arguments: {}
-      env:
-          ENV1: foo
-          ENV2: bla
-      node_verify_cmd:  (runs on the node to verify if the command needs to run)
-      dop_verify_cmd: (runs on dop to verify the state)
-      expect_exit_code: 0 / [ \d ] / any
-
+      command:
+          name: custom
+          exec: /tmp/test
+          arguments: {}
+          env:
+              ENV1: foo
+              ENV2: bla
+          node_verify_cmd:  (runs on the node to verify if the command needs to run)
+          dop_verify_cmd: (runs on dop to verify the state)
+          expect_exit_code: 0 / [ \d ] / any
+          fail_on_warning: true
+          parse_output:
+              error:
+                  - '/^Error: /'
+              warning:
+                  - '/^Warning: /'
