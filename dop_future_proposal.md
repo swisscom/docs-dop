@@ -124,11 +124,12 @@ a node we should introduce the normal node selection switches to this command an
 it possible to limit it to a stepset or even a single step.
 
 Examples:
-reset --nodes foo01.example.com,foo02.example.com
-reset --stepset maint
-reset --stepset maint --nodes foo01.example.com,foo02.example.com
-reset --stepset maint --step 4 --nodes foo01.example.com,foo02.example.com
-reset --stepset maint --step "step name" --nodes foo01.example.com,foo02.example.com
+
+    reset --nodes foo01.example.com,foo02.example.com
+    reset --stepset maint
+    reset --stepset maint --nodes foo01.example.com,foo02.example.com
+    reset --stepset maint --step 4 --nodes foo01.example.com,foo02.example.com
+    reset --stepset maint --step "step name" --nodes foo01.example.com,foo02.example.com
 
 ## DOP Visibility Endpoints
 
@@ -146,14 +147,14 @@ Those are tied to executions and are therefor available over this endpoint. The 
 should be created by the tools DOPv and DOPi and DOPc should only have to load them from
 the disk from the right place.
 
-/var/log/dop/<plan_name>/<timestamp|exec_id>/all.log
-/var/log/dop/<plan_name>/<timestamp|exec_id>/foo01.example.com
+    /var/log/dop/<plan_name>/<timestamp|exec_id>/all.log
+    /var/log/dop/<plan_name>/<timestamp|exec_id>/foo01.example.com
 
 We should be able to change the verbosity level lower than the stored logs to filter out
 noise automatically. (?? client or server side ??)
 
-/executions/<id>/log
-/executions/<id>/log?node=foo01.example.com
+    /executions/<id>/log
+    /executions/<id>/log?node=foo01.example.com
 
 #### Open Questions
 
@@ -165,7 +166,7 @@ Currently we only have the state of DOPi. But since we now start to implement mo
 info for DOPv we should be able to create some form of state endpoint which delivers
 information from both tools.
 
-/executions/plan/state
+    /executions/plan/state
 
 Maybe add more granular access in the future if needed. But since the state is a hash
 this is not really needed initially
