@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on DOP Deploment Orchestrator for Puppet</title>
+    <link>https://swisscom.github.io/docs-dop/post/index.xml</link>
+    <description>Recent content in Posts on DOP Deploment Orchestrator for Puppet</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Apr 2017 14:40:55 +0200</lastBuildDate>
+    <atom:link href="https://swisscom.github.io/docs-dop/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>overview</title>
+      <link>https://swisscom.github.io/docs-dop/post/overview/</link>
+      <pubDate>Mon, 10 Apr 2017 14:40:55 +0200</pubDate>
+      
+      <guid>https://swisscom.github.io/docs-dop/post/overview/</guid>
+      <description>
+
+&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;
+
+&lt;p&gt;This is an overview of the basic DOP features&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

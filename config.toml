@@ -3,6 +3,6 @@ title = "DOP Deploment Orchestrator for Puppet"
 baseurl = "https://swisscom.github.io/docs-dop/"
 
 themesdir = "themes"
-theme = "docuapi"
+theme = "hugo-theme-learn"
 
-
+publishDir='docs'
