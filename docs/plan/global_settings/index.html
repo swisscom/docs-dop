@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Architecture</title>
+    <title>Global Settings</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/overview/architecture/">
+  <body class="" data-url="/docs-dop/plan/global_settings/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -75,7 +75,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/overview/">
+      <li class="dd-item  " data-nav-id="/docs-dop/overview/">
         <a href="/docs-dop/overview/">
           <span>
             
@@ -88,7 +88,7 @@
         
         <ul>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/overview/architecture/">
+            <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
               <a href="/docs-dop/overview/architecture/">
                 <span>Architecture     </i></span>
               </a>
@@ -111,7 +111,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -130,7 +130,7 @@
               </a>
             </li>
           
-            <li class="dd-item " data-nav-id="/docs-dop/plan/global_settings/">
+            <li class="dd-item active" data-nav-id="/docs-dop/plan/global_settings/">
               <a href="/docs-dop/plan/global_settings/">
                 <span>Global Settings     </i></span>
               </a>
@@ -209,18 +209,24 @@
                   
                     
                     
-                <a href="/docs-dop/overview/" itemprop="url"><span itemprop="title">Overview</span></a> <i class="fa fa-angle-right"></i>
+                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
                     
                   
                 
-                <span itemprop="title"> Architecture</span>
+                <span itemprop="title"> Global Settings</span>
               </div>
               
                   <div class="progress">
     <div class="wrapper">
 <nav id="TableOfContents">
 <ul>
-<li><a href="#tbd">TBD</a></li>
+<li>
+<ul>
+<li><a href="#name-optional">name (optional)</a></li>
+<li><a href="#max-in-flight-optional">Max in flight (optional)</a></li>
+<li><a href="#max-per-role-optional">Max per role (optional)</a></li>
+<li><a href="#canary-host-optional">Canary host (optional)</a></li>
+</ul></li>
 </ul>
 </nav>
     </div>
@@ -232,12 +238,132 @@
             
               <div id="body-inner">
                 
-                <h1>Architecture</h1>
+                <h1>Global Settings</h1>
                 
 
 
 
-<h1 id="tbd">TBD</h1>
+<p>Global settings are on the top level of a plan. This are settings which affect the whole plan or represent
+default values which can be changed in other places.</p>
+
+<h2 id="name-optional">name (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>name</td>
+<td>/[\w-]+/</td>
+<td>(sha1 of content)</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The name of the plan is the handle under which dop will store it in the plan cache. This is important so it can later
+identify the right plan if you want to update the plan or run it from the plan store.</p>
+
+<p>If you don&rsquo;t specify a plan name dop will calculate the sha1 of the plan content and use that instead. This also means
+you will not be able to update the plan.</p>
+
+<h2 id="max-in-flight-optional">Max in flight (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>max_in_flight</td>
+<td>-1..inf</td>
+<td>3</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The amount of nodes DOPi will be executing commands on and DOPv will depoly in parallel.</p>
+
+<p>There are also two special values:</p>
+
+<ul>
+<li>The value &ldquo;0&rdquo; will disable thread spawning for debug purposes.</li>
+<li>The value &ldquo;-1&rdquo; will spawn as many threads as there are nodes.</li>
+</ul>
+
+<p>This option can be overwritten on step level for DOPi and on infrastructure level for DOPv</p>
+
+<h2 id="max-per-role-optional">Max per role (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>max_per_role</td>
+<td>-1..inf</td>
+<td>-1</td>
+<td>0.11</td>
+</tr>
+</tbody>
+</table>
+
+<p>The amount of nodes per role DOPi will execute in parallel.</p>
+
+<p>There are also two special values:</p>
+
+<ul>
+<li>The values &ldquo;0&rdquo; and &ldquo;-1&rdquo; will make DOPi ignore the roles.</li>
+</ul>
+
+<p>This option can be overwritten on step level</p>
+
+<h2 id="canary-host-optional">Canary host (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>canary_host</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
+
+<p>If this flag is set to true DOPi will randomly choose one host and apply the step in a first round only to this host and only run the others in parallel, once this step succeeded.</p>
+
+<p>This option can be overwritten on step level</p>
 
 
       

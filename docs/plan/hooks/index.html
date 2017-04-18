@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Architecture</title>
+    <title>Hooks</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/overview/architecture/">
+  <body class="" data-url="/docs-dop/plan/hooks/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -75,7 +75,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/overview/">
+      <li class="dd-item  " data-nav-id="/docs-dop/overview/">
         <a href="/docs-dop/overview/">
           <span>
             
@@ -88,7 +88,7 @@
         
         <ul>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/overview/architecture/">
+            <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
               <a href="/docs-dop/overview/architecture/">
                 <span>Architecture     </i></span>
               </a>
@@ -111,7 +111,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -142,7 +142,7 @@
               </a>
             </li>
           
-            <li class="dd-item " data-nav-id="/docs-dop/plan/hooks/">
+            <li class="dd-item active" data-nav-id="/docs-dop/plan/hooks/">
               <a href="/docs-dop/plan/hooks/">
                 <span>Hooks     </i></span>
               </a>
@@ -209,20 +209,16 @@
                   
                     
                     
-                <a href="/docs-dop/overview/" itemprop="url"><span itemprop="title">Overview</span></a> <i class="fa fa-angle-right"></i>
+                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
                     
                   
                 
-                <span itemprop="title"> Architecture</span>
+                <span itemprop="title"> Hooks</span>
               </div>
               
                   <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li><a href="#tbd">TBD</a></li>
-</ul>
-</nav>
+
     </div>
 </div>
 
@@ -232,12 +228,52 @@
             
               <div id="body-inner">
                 
-                <h1>Architecture</h1>
+                <h1>Hooks</h1>
                 
 
+<p>Hooks can be defined as a hash of programs that will be called before and/or
+after a node is created and/or updated and/or destroyed.</p>
 
+<p>A hook consists of an array of strings that represent paths to programs to be
+be executed at particular deployment stage.</p>
 
-<h1 id="tbd">TBD</h1>
+<p>Following is a list of supported hooks:
+ - <code>pre_create_vm</code> - a set of programs executed before node creation.
+ - <code>post_create_vm</code> - a set of programs executed after node creation.
+ - <code>pre_update_vm</code> - a set programs executed before node update.
+ - <code>post_update_vm</code> - a set of programs executed after node is update.
+ - <code>pre_destroy_vm</code> - a set of programs executed before node removal.
+ - <code>post_destroy_vm</code> - a set of programs executed after node removal.</p>
+
+<p><strong>IMPORTANT</strong>:
+ - FQDN of the given node is passed to program(s) as the first argument.
+ - <code>0</code> or <code>1</code> is passed to program(s) as the second argument. More
+   specifically, <code>0</code> is passed if there were no changes of the node during
+   deployment, while <code>1</code> indicates that there were some changes.
+ - Programs are executed in the order of their definition in the deployment
+   plan.
+ - Each hook type definition is optional, however, <code>hooks</code> hash must contain
+   at least one hook type.</p>
+
+<p>Following is an example of hooks definition</p>
+
+<pre><code>hooks:
+  pre_create_vm:
+    - /path/to/pre_create_program_1
+    - /path/to/pre_create_program_2
+  post_create_vm:
+    - /path/to/post_create_program_1
+  pre_update_vm:
+    - /path/to/pre_update_program_1
+  post_update_vm:
+    - /path/to/post_update_program_2
+  pre_destroy_vm:
+    - /path/to/pre_destroy_program_1
+    - /path/to/pre_destroy_program_2
+    - /path/to/pre_destroy_program_3
+  post_destroy_vm:
+    - /path/to/post_destroy_program_1
+</code></pre>
 
 
       

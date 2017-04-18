@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Architecture</title>
+    <title>Configuration</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/overview/architecture/">
+  <body class="" data-url="/docs-dop/plan/configuration/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -75,7 +75,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/overview/">
+      <li class="dd-item  " data-nav-id="/docs-dop/overview/">
         <a href="/docs-dop/overview/">
           <span>
             
@@ -88,7 +88,7 @@
         
         <ul>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/overview/architecture/">
+            <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
               <a href="/docs-dop/overview/architecture/">
                 <span>Architecture     </i></span>
               </a>
@@ -111,7 +111,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -160,7 +160,7 @@
               </a>
             </li>
           
-            <li class="dd-item " data-nav-id="/docs-dop/plan/configuration/">
+            <li class="dd-item active" data-nav-id="/docs-dop/plan/configuration/">
               <a href="/docs-dop/plan/configuration/">
                 <span>Configuration     </i></span>
               </a>
@@ -209,18 +209,24 @@
                   
                     
                     
-                <a href="/docs-dop/overview/" itemprop="url"><span itemprop="title">Overview</span></a> <i class="fa fa-angle-right"></i>
+                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
                     
                   
                 
-                <span itemprop="title"> Architecture</span>
+                <span itemprop="title"> Configuration</span>
               </div>
               
                   <div class="progress">
     <div class="wrapper">
 <nav id="TableOfContents">
 <ul>
-<li><a href="#tbd">TBD</a></li>
+<li>
+<ul>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#nodes">Nodes</a></li>
+</ul></li>
+</ul></li>
 </ul>
 </nav>
     </div>
@@ -232,12 +238,56 @@
             
               <div id="body-inner">
                 
-                <h1>Architecture</h1>
+                <h1>Configuration</h1>
                 
 
 
 
-<h1 id="tbd">TBD</h1>
+<p>The configurations hash contains the hiera configuration for the deployment. The sub-hashes map the hierarchy
+defined in the hiera.conf.</p>
+
+<p>Example:</p>
+
+<pre><code>hosts/foo/mynode.example.com
+
+Maps to:
+
+configuration:
+  hosts:
+    foo:
+      mynode.example.com
+</code></pre>
+
+<p>You can use all the hierarchy levels you like, but be aware that the hiera plugin will only look them up if
+the node it is looking the key up for is in the plan. Defaults which are relevant to your deployment should
+therefor be set inside the plan, while global defaults should go into your global hiera data.</p>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="nodes">Nodes</h3>
+
+<p>Usually there is a nodes or hosts layer in the hierarchy and it can be used to assigns variables to an individual node or to a selected set of nodes. Here are some examples:</p>
+
+<pre><code>configuration:
+  nodes:
+    mysql01.example.com:
+      role: mysql
+      my_var:  my_value
+    web04.example.com:
+      role: httpd_special
+</code></pre>
+
+<p>The only relevant setting here for DOP is the role variable. The name of the role variable can be configured but defaults to &lsquo;role&rsquo;. If hiera is configured and activated, then dop will take the role specified in hiera if found.</p>
+
+<p>During validation the plan is not in the plan cache the role can not be resolved by hiera directly. For this case, DOP has an internal resolution mechanism in which it parses the configuration hash to get the role variable.</p>
+
+<ol>
+<li>Hiera</li>
+<li>Internal Lookup (for validation)</li>
+<li>Default</li>
+</ol>
+
+<p>A node always needs a role. If the parser finds no value for one of the specified nodes in the plan file and if no default is set, then DOP will throw an error.</p>
 
 
       

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.20" />
+    <meta name="description" content="">
+
+
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+
+    
+    <title>Nodes</title>
+    <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/featherlight.min.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/horsey.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/theme.css" rel="stylesheet">
+    <link href="https://swisscom.github.io/docs-dop//css/hugo-theme.css" rel="stylesheet">
+    <script src="https://swisscom.github.io/docs-dop//js/jquery-2.x.min.js"></script>
+    <style type="text/css">:root #header + #content > #left > #rlblock_left
+    {display:none !important;}</style>
+    
+
+  </head>
+  <body class="" data-url="/docs-dop/plan/nodes/">
+    
+    <nav id="sidebar">
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://swisscom.github.io/docs-dop">
+  <strong>DOP</strong>
+</a>
+
+    </div>
+    
+</div>
+
+
+  <div class="highlightable">
+    <ul class="topics">
+      
+        
+        
+          
+          
+            
+          
+        
+          
+          
+            
+          
+        
+        
+        
+          
+        
+          
+        
+      
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/docs-dop/overview/">
+        <a href="/docs-dop/overview/">
+          <span>
+            
+              <b>1. </b>
+            
+             Overview
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
+              <a href="/docs-dop/overview/architecture/">
+                <span>Architecture     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
+        <a href="/docs-dop/plan/">
+          <span>
+            
+              <b>2. </b>
+            
+             Plan
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/pre_processor/">
+              <a href="/docs-dop/plan/pre_processor/">
+                <span>Pre-processor     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/global_settings/">
+              <a href="/docs-dop/plan/global_settings/">
+                <span>Global Settings     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/credentials/">
+              <a href="/docs-dop/plan/credentials/">
+                <span>Credentials     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/hooks/">
+              <a href="/docs-dop/plan/hooks/">
+                <span>Hooks     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/infrastructures/">
+              <a href="/docs-dop/plan/infrastructures/">
+                <span>Infrastructures     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item active" data-nav-id="/docs-dop/plan/nodes/">
+              <a href="/docs-dop/plan/nodes/">
+                <span>Nodes     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/configuration/">
+              <a href="/docs-dop/plan/configuration/">
+                <span>Configuration     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/plan/steps/">
+              <a href="/docs-dop/plan/steps/">
+                <span>Steps     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
+    </ul>
+    <hr>
+     
+    <section id="footer">
+      <p>Built with <a href="https://github.com/matcornic/hugo-theme-learn"><i class="fa fa-heart"></i></a> from <a href="http://getgrav.org">Grav</a> and <a href="http://gohugo.io/">Hugo</a></p>
+
+    </section>
+  </div>
+</nav>
+
+        <section id="body">
+        <div id="overlay"></div>
+
+        <div class="padding highlightable">
+
+            <div id="top-bar">
+              
+              <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                  <span id="sidebar-toggle-span">
+                      <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                        <i class="fa fa-bars"></i>
+                      </a>
+                  </span>
+                
+                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
+                
+                
+                  
+                  
+                  
+                    
+                    
+                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
+                    
+                  
+                
+                <span itemprop="title"> Nodes</span>
+              </div>
+              
+                  <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#node-properties">Node Properties</a></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+              
+
+            </div>
+            
+              <div id="body-inner">
+                
+                <h1>Nodes</h1>
+                
+
+
+
+<p>The nodes hash holds the basic information about all nodes you want to create
+and use. Each entry in the nodes hash is itself a hash. A single entry of this
+is called a node hash (singular). Each node hash starts with the node name as a
+key:</p>
+
+<pre><code>nodes:
+    mysql01.example.com:
+      ...
+      ...
+      ...
+</code></pre>
+
+<p><strong>IMPORTANT</strong>: The node name must be unique for each deployment. Please keep
+this in mind when combining several deployments into a single deployment file.</p>
+
+<h2 id="node-properties">Node Properties</h2>
+
+<p>Each node configuration is described by a so-called <em>&ldquo;node hash&rdquo;</em>. The list
+bellow provides an overview of various node properties. Please note that
+a property name is actually a keyword of a node hash.</p>
+
+<ol>
+<li><p><strong><em>fqdn</em></strong> - an optional fully qualified domain name that is used to
+generate the hostname of the guest. If not defined, the hostname is implicitly
+derived from the node name itself (for instance, in case of
+<code>mgt01.example.com</code>, the hostname definition would match the node name, i.e.
+<code>mgt01.example.com</code>).</p></li>
+
+<li><p><strong><em>infrastructure</em></strong> - a name of the  infrastructure this node is a part of.
+This is a required property and its value must point to a valid entry of
+infrastructures hash.</p></li>
+
+<li><p><strong><em>infrastructure_properties</em></strong> - a hash that specifies various properties
+of a given node should be deployed with in an infrastructure.</p>
+
+<ol>
+<li><p><strong><em>affinity_groups</em></strong> - an optional OVirt/RHEVm-specific property that
+designates what affinity groups should be a node associated with.</p></li>
+
+<li><p><strong><em>keep_ha</em></strong> - an optional OVirt/RHEVm-specific boolean property that
+indicates whether the VM should be highly available or not. By default,
+instances are set as highly available. If the provider also supports a
+migration priorities they are set to low by default.</p></li>
+
+<li><p><strong><em>datacenter</em></strong> and <strong><em>cluster</em></strong> - Specify which datacenter and cluster
+should be the node deployed into.</p></li>
+</ol>
+
+<p><strong>IMPORTANT</strong>: These properties are required for provider OVirt/RHEVm and
+   VSphere providers. Other providers silently disregard it.</p>
+
+<ol>
+<li><p><strong><em>default_pool</em></strong> - property specifies the default data storage which is
+used when deploying a guest from the template. It is also used for persistent
+disks that do not specify an explicit <strong><em>pool</em></strong>. This attribute is optional.</p></li>
+
+<li><p><strong><em>dest_folder</em></strong> property defines a destination folder into which the
+guest shall be deployed. This folder must exist before the deployment
+of the guest. This is propery is optional and VSphere-specific.</p></li>
+
+<li><p><strong><em>tenant</em></strong> property specifies the name of the tenant for OpenStack
+infrastructures. It is required for OpenStack infrastructures.</p></li>
+
+<li><p><strong><em>use_config_drive</em></strong> an optional OpenStack-specific boolean property
+that specifies whether a config drive should be used for VM
+provisioning. If set to <code>false</code> or indefined, metadata service is
+used. If set to <code>true</code> config drive is used.</p></li>
+
+<li><p><strong><em>domain_id</em></strong> an optional property specifies the name of the domain ID
+for OpenStack infrastructures. It defaults to <code>default</code>.</p></li>
+
+<li><p><strong><em>endpoint_type</em></strong> an optional property specifies the endpoint type
+for OpenStack infrastructures. Accepted values are <code>publicURL</code>,
+<code>internalURL</code> and <code>adminURL</code>. It defaults to <code>publicURL</code>.</p></li>
+</ol>
+
+<p><strong>IMPORTANT</strong>: Infrastructure properties may differ across different
+provider types.</p>
+
+<p><strong>IMPORTANT</strong>: In general, some of infrastructure properties have to be
+defined for each provider other than <em>baremetal</em>.</p></li>
+
+<li><p><strong><em>image</em></strong> - an image to deploy the node from (a.k.a template). An image
+must be registered within the provider.</p>
+
+<p><strong>IMPORTANT</strong>: This property is required unless the provider type is
+<em>baremetal</em>.</p></li>
+
+<li><p><strong><em>full_clone</em></strong> - an optional boolean property that instructs OVirt/RHEVm
+providers:</p>
+
+<ol>
+<li><p>To provision a node from a template as a full independent clone if set to
+<code>true</code> or unset.</p></li>
+
+<li><p>To provision a node from a template as thin (dependent) clone if set to
+<code>false</code>.</p></li>
+</ol>
+
+<p>The default is to provision a fully independent clone.</p>
+
+<p><strong>IMPORTANT</strong>: Do not use this property for other cloud provider types than
+OVirt/RHEVm.</p></li>
+
+<li><p><strong><em>interfaces</em></strong> - network interface hash cards specification. Each NIC is
+hashed by its name (for instance, <em>eth0</em>, <em>eth1</em>, etc).</p>
+
+<p><strong>IMPORTANT</strong>: For Linux guests, the NIC name defined in a plan should
+correspond to its logical name in the guest OS.</p>
+
+<p><strong>NOTE</strong>: NICs are ordered and configured within the the guest OS in the
+order they were defined in the plan.</p>
+
+<p><strong>IMPORTANT</strong>: This property is required unless the provider type is
+<em>baremetal</em>.</p>
+
+<p>Following is a list of properties that descirbe a network interface card:</p>
+
+<ol>
+<li><strong><em>network</em></strong> - name of the network the NIC belongs to. The network
+must exist in infrastructures&rsquo; networks hash.</li>
+</ol>
+
+<p><strong>IMPORTANT:</strong> In case of OpenStack providers, the network name must
+   point to valid subnet rather than a network name.</p>
+
+<ol>
+<li><p><strong><em>ip</em></strong> - a property that defines an IP address. Following values are
+permitted:</p>
+
+<ul>
+<li>a properly formatted string witn an IP in case of static,</li>
+<li>a <em>dhcp</em> literal in case the IP should by assigned by DHCP,</li>
+<li><em>none</em> literal in case no IP adress should be set for a given interface.</li>
+</ul></li>
+
+<li><p><strong><em>set_gateway</em></strong> - an optional boolean property that defines, whether a
+gateway should be defined for a given interface during guest customization.
+It is <code>true</code> by default.</p></li>
+
+<li><p><strong><em>virtual_switch</em></strong> - an optional (currently VSphere-specific) property
+that specifies which distributed virtual switch should be used.</p></li>
+
+<li><p><strong><em>floating_network</em></strong> - an optional OpenStack specific property that
+specifies the network from which is the <strong>floating</strong> IP provisioned and
+associated with the interface.</p></li>
+</ol></li>
+
+<li><p><strong><em>disks</em></strong> - an optional property to define additional disks that should
+persist accross deployments. It is of hash type. The key represents a disk
+name. A persistant disk itself is described by a so-called <em>&ldquo;disk hash&rdquo;</em>
+with following keywords:</p>
+
+<ol>
+<li><strong><em>pool</em></strong> - the name of the storage pool that should be used as a backing
+store for a disk. It is required for OVirt/RHEVm and VSphere providers,
+unless the <strong><em>default_pool</em></strong> is specified in
+<strong><em>infrastructure_properties</em></strong>.</li>
+<li><strong><em>size</em></strong> - the size of the disk in megabytes (when the value has a
+suffix <em>M</em>) or gigabytes (when the value has a suffix <em>G</em>).</li>
+<li><strong><em>thin</em></strong> - an optional boolean flag that indicates whether the disk will be
+thin provisioned. Its default  value is <em>true</em>, meaning the disks are
+thin-provisioned by default. Please use <em>false</em> as the value if you need to
+thick provision a disk.</li>
+</ol>
+
+<p><strong>IMPORTANT:</strong> Currently, the selection of provisioning type is honored
+   only by OVirt/RHEVm provider. A thick-provisioned disk in OVirt/RHEVm
+   provider is of <strong>raw</strong> rather than <strong>cow</strong> type. As a consequence,
+   it is not possible to create a snapshot of such a disk.*</p></li>
+
+<li><p><strong><em>credentials</em></strong> - an optional property to define credentials for
+administrator user (root, Administrator). This information is passed to
+the customization tool (cloud-init, VSphere customization, etc.). Following
+data can be specified:</p>
+
+<ul>
+<li><strong><em>root_password</em></strong> - super user password that is set for cloud init phase,</li>
+<li><strong><em>root_ssh_keys</em></strong> - an array of OpenSSH public keys that are recorded
+into <code>/root/.ssh/authorized_keys</code> by cloud init.</li>
+<li><strong><em>administrator_password</em></strong> - an optional property that specifies the
+password of the administrator user for VSphere-based windows-guests
+customization. it defaults to an empty password which in turn leads to an
+automatic logon upon windows guest startup.</li>
+</ul></li>
+
+<li><p><strong><em>flavor</em></strong> - an optional property that specifies how to set the amount of
+ CPU cores, memory and the size of the <em>root</em> disk. Please consult
+ <a href="http://docs.openstack.org/openstack-ops/content/flavors.html">OpenStack
+ flavors</a> for
+ their definition. In case the infrastructure does not support flavors feature,
+ it is emulated.</p>
+
+<p><strong>IMPORTANT:</strong> The <strong>flavor</strong> property is mutually exclusive with any of
+ <strong>cores</strong>, <strong>memory</strong> or <strong>storage</strong> properties. Having said that, an
+ exception will logged if <strong>flavor</strong> is specified along with one or more
+ of <strong>cores</strong>, <strong>memory</strong> and/or <strong>storage</strong> properties.</p></li>
+
+<li><p><strong><em>cores</em></strong> - an optional positive integer that sets the number of cores
+for a given node. It is <code>2</code> by default.</p></li>
+
+<li><p><strong><em>memory</em></strong> - an optional value that is used to set the amount of
+ provisioned memory for a given node. The default is <code>4G</code>.</p>
+
+<p>The format of an input value is a positive number followed by one of:</p>
+
+<ul>
+<li><code>K</code> for kibibytes,</li>
+<li><code>M</code> for mebibytes,</li>
+<li><code>G</code> for gibibytes,</li>
+<li><code>KB</code> for kilobytes,</li>
+<li><code>MB</code> for megabytes,</li>
+<li><code>GB</code> for gigabytes.</li>
+</ul></li>
+
+<li><p><strong><em>storage</em></strong> - an that specifies the size of the root volume. The
+ default value is <code>10G</code>.</p>
+
+<p>Please note that some infrastructure providers disregard this value,
+ especially when the node is provisioned from a template.</p>
+
+<p>Please have a look to <strong><em>memory</em></strong> for formatting of input value.</p></li>
+
+<li><p><strong><em>timezone</em></strong> - a property that specifies the timezone of the guest
+ operating system. Please make sure that:</p>
+
+<ul>
+<li><a href="https://www.vmware.com/support/developer/windowstoolkit/wintk40u1/html/New-OSCustomizationSpec.html">following values are
+used</a>
+for VSphere-based windows guests customization,</li>
+<li>for Linux guests, values specified in a <strong><code>TZ</code></strong> column of the <a href="http://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of
+tz databaze time zones</a>
+are used.</li>
+</ul>
+
+<p><strong>IMPORTANT:</strong> This property is required when customizing guest on <em>VSPhere</em> provider.</p></li>
+
+<li><p><strong><em>product_id</em></strong> - an optional, VSphere-specific windows-only guest customization
+ property that specifies a serial number. Its default value is
+ undefined which leaves the guest OS in an evaluation/trial mode.</p></li>
+
+<li><p><strong><em>organization_name</em></strong> - a required, VSphere-specific windows-only guest
+ customization property that specifies the organization name of the
+ administrator user.</p></li>
+
+<li><p><strong><em>dns</em></strong> - an optional property that specifies name servers and search
+ domains for further node customization. If specified, it has to be a hash
+ with any of the following items:</p>
+
+<ol>
+<li><strong><em>name_servers</em></strong> - a list of valid IP addresses.</li>
+<li><strong><em>search_domains</em></strong> - a list of valid domains.</li>
+</ol></li>
+</ol>
+
+<p>The example bellow shows a specification for a database backend and a web node:</p>
+
+<pre><code>nodes:
+  mgt01.example.com:
+    infrastructure: management
+    infrastructure_properties:
+      affinity_groups:
+        - clu-lab1ch-ag_1
+        - clu-lab1ch-ag_3
+      keep_ha: false
+      datacenter: lab1ch
+      cluster: clu-lab1ch
+      default_pool: ssd_pool1
+      full_clone: false
+    image: rhel6cloudinit
+    interfaces:
+      eth0:
+        network: management
+          ip: dhcp
+    credentials:
+      - root_password
+      - root_ssh_pubkey
+
+  mssql01_mgt01:
+    fqdn: mssql01.example.com
+    infrastructure: management
+    infrastructure_properties:
+      datacenter: lab1ch
+      cluster: clu-lab1ch
+      keep_ha: true
+    image: win12r1_64
+    cores: 6
+    memory: 64G
+    storage: 128G
+    interfaces:
+      eth0:
+        network: management
+        ip: 192.168.254.13
+    disks:
+      db1:
+        pool: storage_pool3
+        size: 256G
+    thin: false
+    credentials:
+      - admin_password
+
+  mysql01.example.com:
+    infrastructure: lamp
+    infrastructure_properties:
+      tenant: lamp01
+    image: rhel6cloudinit
+    flavor: medium
+    interfaces:
+      eth0:
+        network: management-subnet
+        ip: 192.168.253.25
+      eth1:
+        network: production-subnet
+        ip: 192.168.2.102
+    floating_network: ext-net0
+    disks:
+      rdo:
+        pool: storage_pool1
+        size: 4000M
+    thin: false
+      db1:
+        size: 20G
+
+  mssql01.example.com:
+    infrastructure: db
+    infrastructure_properties:
+      dest_folder: sql
+      datacenter: dc01
+      cluster: cl01
+      default_pool: sql_pool
+    image: w12r2
+    flavor: medium
+    interfaces:
+      eth0:
+        network: management
+        ip: 192.168.252.33
+    set_gateway: false
+      eth1:
+        network: db
+        ip: 192.168.3.109
+    disks:
+      rdo:
+        pool: storage_pool3
+        size: 4000M
+    thin: false
+      db1:
+        size: 20G
+    credentials:
+      - admin_password
+  timezone: 100
+    organization_name: Acme
+
+  web01.example.com:
+    infrastructure: lamp
+    infrastructure_properties:
+      tenant: lamp01
+    datacenter: lab1ch
+    cluster: clu-lab1ch
+    image: rhel6
+    flavor: small
+    interfaces:
+      eth0:
+        network: management-subnet
+        ip: 192.168.253.26
+      eth1:
+        network: production-subnet
+        ip: dhcp
+    floating_network: ext-net0
+</code></pre>
+
+
+      
+      
+      </div>
+    </div>
+
+    
+
+    <div id="navigation">
+        
+        
+        
+    </div>
+
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="https://swisscom.github.io/docs-dop//js/clipboard.min.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/perfect-scrollbar.min.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/jquery.sticky-kit.min.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/featherlight.min.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/html5shiv-printshiv.min.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://swisscom.github.io/docs-dop//js/modernizr.custom.71422.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/learn.js"></script>
+    <script src="https://swisscom.github.io/docs-dop//js/hugo-learn.js"></script>
+    
+
+  </body>
+</html>
+

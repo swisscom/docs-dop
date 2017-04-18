@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Architecture</title>
+    <title>Pre-processor</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/overview/architecture/">
+  <body class="" data-url="/docs-dop/plan/pre_processor/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -75,7 +75,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/overview/">
+      <li class="dd-item  " data-nav-id="/docs-dop/overview/">
         <a href="/docs-dop/overview/">
           <span>
             
@@ -88,7 +88,7 @@
         
         <ul>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/overview/architecture/">
+            <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
               <a href="/docs-dop/overview/architecture/">
                 <span>Architecture     </i></span>
               </a>
@@ -111,7 +111,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -124,7 +124,7 @@
         
         <ul>
           
-            <li class="dd-item " data-nav-id="/docs-dop/plan/pre_processor/">
+            <li class="dd-item active" data-nav-id="/docs-dop/plan/pre_processor/">
               <a href="/docs-dop/plan/pre_processor/">
                 <span>Pre-processor     </i></span>
               </a>
@@ -209,18 +209,21 @@
                   
                     
                     
-                <a href="/docs-dop/overview/" itemprop="url"><span itemprop="title">Overview</span></a> <i class="fa fa-angle-right"></i>
+                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
                     
                   
                 
-                <span itemprop="title"> Architecture</span>
+                <span itemprop="title"> Pre-processor</span>
               </div>
               
                   <div class="progress">
     <div class="wrapper">
 <nav id="TableOfContents">
 <ul>
-<li><a href="#tbd">TBD</a></li>
+<li>
+<ul>
+<li><a href="#includes">Includes</a></li>
+</ul></li>
 </ul>
 </nav>
     </div>
@@ -232,12 +235,57 @@
             
               <div id="body-inner">
                 
-                <h1>Architecture</h1>
+                <h1>Pre-processor</h1>
                 
 
 
 
-<h1 id="tbd">TBD</h1>
+<p>The pre-processor is something which only applies if you load plans from a file and
+not if you use dop as a library and feed the plan as a hash. The pre-processor renders
+the plan before it gets loaded by the parser.</p>
+
+<p>The only feature implemented at the moment is includes, which allows you to split your
+plans into multiple files and possible reuse parts between different plans.</p>
+
+<p>In the future this may also be used to do templating, but this is not implemented yet.</p>
+
+<h2 id="includes">Includes</h2>
+
+<p>From DOPi &gt;= 0.16, DOPv &gt;= 0.8 on the DOP plan format supports includes. Before
+DOP will parse the plan there is now a preprocessor step which will replace all
+&ldquo;include: <file>&rdquo; statements with the content of the file.</p>
+
+<p>Example:</p>
+
+<pre><code>name: 'my_plan'
+include: '/etc/dop_deployments/credentials.yaml'
+include: '/etc/dop_deployments/infrastructure.yaml'
+include: 'nodes.yaml'
+
+steps:
+  default:
+    include: 'openstack_deploy_steps.yaml'
+  patch:
+    include: '/etc/dop_deployments/generic_patch_maintenance_steps.yaml'
+</code></pre>
+
+<p>The file path can either be a relative or an absolute path. Relative paths mean
+that the preprocessor will look for the file relative to the path of the file
+which is including it. Included files can itself include files.</p>
+
+<p>The content of the included file will be placed at the position where the include
+statement begins with the exact same identation for every line.</p>
+
+<p>It is important to note, that since the pre-processor is running before the YAML
+parser, that in case of DOPc all the files must be on the client side. It is not
+possible to reference files on the DOPc server side. The DOPc client always has
+to send a completely rendered plan to the server.</p>
+
+<p>In order to test the result localy you can show the result of the pre-processor
+with the following command:</p>
+
+<pre><code>dopc-client render path/to/my/plan.yaml
+</code></pre>
 
 
       

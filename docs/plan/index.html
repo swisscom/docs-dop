@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="js csstransforms3d">
   <head>
@@ -10,7 +11,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Architecture</title>
+    <title>Plan</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +26,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/overview/architecture/">
+  <body class="" data-url="/docs-dop/plan/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -75,7 +76,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/overview/">
+      <li class="dd-item  " data-nav-id="/docs-dop/overview/">
         <a href="/docs-dop/overview/">
           <span>
             
@@ -88,7 +89,7 @@
         
         <ul>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/overview/architecture/">
+            <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
               <a href="/docs-dop/overview/architecture/">
                 <span>Architecture     </i></span>
               </a>
@@ -111,7 +112,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
+      <li class="dd-item active parent" data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -201,46 +202,74 @@
                       </a>
                   </span>
                 
-                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
-                
                 
                   
                   
                   
                     
                     
-                <a href="/docs-dop/overview/" itemprop="url"><span itemprop="title">Overview</span></a> <i class="fa fa-angle-right"></i>
-                    
                   
                 
-                <span itemprop="title"> Architecture</span>
+                <span itemprop="title"> Plan</span>
               </div>
-              
-                  <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li><a href="#tbd">TBD</a></li>
-</ul>
-</nav>
-    </div>
-</div>
-
               
 
             </div>
             
+              <div id="chapter">
+            
               <div id="body-inner">
                 
-                <h1>Architecture</h1>
-                
 
 
 
-<h1 id="tbd">TBD</h1>
+<h1 id="dop-plan-format-overview">DOP Plan Format Overview</h1>
+
+<p>A DOP plan is a description of a deployment of multiple a multi-node application. It contains all the information
+needed to deploy the nodes and run puppet in the right order on all the different nodes/roles.</p>
+
+<p>Each plan has some global settings and a couple of sections which each describe a different aspect of the plan. The
+sections are all specified in their own topic in this chapter. Here is a short overview.</p>
+
+<h2 id="credentials">Credentials</h2>
+
+<p>The credentials hash specifies all the credentials needed to login to API endpoints, the nodes and also to configure
+during deployment. You can for example define a root credential and use it in the node section to configure the password
+during staging of the node (if the provider supports that) and use the same credential later in the steps to login via ssh
+or winrm.</p>
+
+<h2 id="hooks">Hooks</h2>
+
+<p>TBD</p>
+
+<h2 id="infrasturctures">Infrasturctures</h2>
+
+<p>The infrastructure hash defines all your cloud infrastructure endpoints and some configuration needed in the deployment,
+like networks, afinity_groups, etc.</p>
+
+<h2 id="nodes">Nodes</h2>
+
+<p>The nodes hash describes all the nodes in your deployment. It references a infrastructure on which you want to deploy
+your node and gives details about the size, image etc of the virtual machine which will be created by DOPv.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Here you can place hiera data for your nodes. If you use the DOP hiera plugin in your puppet master it will read the
+configuration from this place. The hash has to resemble the hierarchy you have defined in your hiera config.</p>
+
+<h2 id="steps">Steps</h2>
+
+<p>Steps describes one or multiple sets of steps to execute in order. Each step defines a set of nodes where it will run
+on and you can limit on how many nodes it will run in parallel. Each step can also have multiple commands which it will
+run in order.</p>
+
+<p>There are different plugins for the most commands needed in bootstraping a node, but you can also just run a custom
+command over ssh, winrm or mcollective.</p>
 
 
       
+      
+        </div> 
       
       </div>
     </div>
@@ -272,4 +301,5 @@
 
   </body>
 </html>
+
 
