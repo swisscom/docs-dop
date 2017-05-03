@@ -6,7 +6,8 @@ weight = 19
 
 +++
 
-The steps array is a list of commands that have to be executed in the correct order. Each element in the array contains a hash of settings which describe the step, the nodes involved and the command to execute.
+The steps array is a list of commands that have to be executed in the correct order. Each element in the
+array contains a hash of settings which describe the step, the nodes involved and the command to execute.
 
 Example:
 ```yaml
@@ -69,146 +70,157 @@ steps:
 The run command will always execute the 'default' step set if nothing else is specified. If only one set is
 specified in the array form without a name this set will have the name 'default'.
 
-### name
+### Name
+
+| Key  | Allowed Values | Default | Since Version |
+|------|----------------|---------|---------------|
+| name | String         | nil     | 0.1           |
 
 The name is just an identifier for the step. You should chose a name that best describes what you are doing in this step.
 
-### nodes
+### Node selectors
 
-This can either be one or a list of nodes and/or Regex patterns or the keyword "all" which will include all nodes for the step.
+A step always runs for a collection of nodes. This can be a single node, an array of hand picked nodes, all
+nodes in a role or various other possibilities. To make it easy to select the right nodes, DOP provides a couple of
+node selectors.
+
+#### nodes (optional)
+
+| Key   | Allowed Values   | Default | Since Version |
+|-------|------------------|---------|---------------|
+| nodes | Array of Strings | nil     | 0.1           |
+
+The nodes node-selector directly selects nodes based on their names. This can be a simple list of names but it may also contain Regular expression patterns to select nodes. In addition the keywor "all" may be used to select all of the nodes in the plan.
 
 If an entry starts and ends with a '/' DOPi will interpret the string as a regular expression.
 
-### set_plugin_defaults
+Include a simple list of nodes:
 
-(This will be in DOPi >= 0.4)
+    steps:
+      - name: "exec on some nodes"
+        nodes:
+          - linux01.example.com
+          - linux02.example.com
 
-With "set_plugin_defaults" it is possible to specify some default values for plugin configuration which will persist over subsequent runs.
+Include nodes based on a regular expression:
 
-The settings are node specific, so they will only be set for the nodes in your step. You can select the plugins for which this applies with
-a list or with regular expressions.
+    steps:
+      - name: "exec on some nodes"
+        nodes:
+          - /linux\d+.example.com/
 
-Direct settings in the plugins will always overwrite the defaults.
+#### roles (optional)
 
-IMPORTANT: The keys you want to set have to be ruby symbols. This is a current limitation of the way the parser is implemented and may change in the future
+| Key   | Allowed Values   | Default | Since Version |
+|-------|------------------|---------|---------------|
+| roles | Array of Strings | nil     | 0.1           |
 
-Example:
-```yaml
+This will include all the nodes with a certain role to a step.
 
-steps:
-  - name: "Set default passwords for Plugins"
-    nodes: all
-    set_plugin_defaults:
-      - plugins: '/^ssh/'
-        :credentials: 'linux_staging_password'
-      - plugins: '/^winrm/'
-        :credentials: 'windows_staging_password'
-      - plugins:
-        - 'ssh/custom'
-        :quiet: false
+roles and nodes can be mixed, dop_common will simply merge the list of nodes. However there has to be at least
+one node in the resulting list in every step.
 
-```
+As in the node selector, if an entry starts and ends with a '/' DOPi will interpret the string as a regular expression.
 
-### delete_plugin_defaults
+roles is basically just a special case for nodes_by_config with the roles variable. But it will do some additional
+checks and you can also set a default value for the role.
 
-(This will be in DOPi >= 0.4)
+#### nodes_by_config (optional)
 
-There are several possibilities how you can remove plugin settings with "delete_plugin_defaults"
-
-IMPORTANT: The keys you want to set have to be ruby symbols. This is a current limitation of the way the parser is implemented and may change in the future
-
-Example:
-```yaml
-  - name: "Remove some specific defaults for all nodes"
-    nodes: all
-    delete_plugin_defaults:
-      - plugins: '/^ssh/'
-        delete_keys:
-          - :credentials
-          - :timeout
-
-  - name: "Remove all the defaults for the ssh plugins for all nodes in role 'foo'"
-    roles:
-      - foo
-    delete_plugin_defaults:
-      - plugins: '/^ssh/'
-        delete_keys: all
-
-  - name: "Remove all the defaults for all plugins for all nodes"
-    nodes: all
-    delete_plugin_defaults: all
-
-```
-
-### nodes_by_config
+| Key             | Allowed Values   | Default | Since Version |
+|-----------------|------------------|---------|---------------|
+| nodes_by_config | Array of Strings | nil     | 0.3           |
 
 Include nodes to a step by specific configuration values which are resolved over hiera.
 
 Example:
-```yaml
 
-configuration:
-  nodes:
-    'mysql01.example.com':
-      'my_alias': 'database_01'
+    configuration:
+      nodes:
+        'mysql01.example.com':
+          'my_alias': 'database_01'
 
-steps:
-  - name: 'include by config'
-    nodes_by_config:
-      'my_alias': 'database_01'
-    command: ssh_run_puppet
+    steps:
+      - name: 'include by config'
+        nodes_by_config:
+          'my_alias': 'database_01'
+        command: ssh_run_puppet
 
-```
-
-If the value of the config variable is an array it will check each value in that array. You can also use pattern here like with node
+If the value of the config variable is an array it will check each value in that array. You can also use patterns the way you can use them in the other selectors.
 
 Example:
-```yaml
 
-configuration:
-  nodes:
-    'mysql01.example.com':
-      'my_alias':
-        - 'database_01'
-        - 'some_other_alias'
+    configuration:
+      nodes:
+        'mysql01.example.com':
+          'my_alias':
+            - 'database_01'
+            - 'some_other_alias'
 
-steps:
-  - name: 'include by config'
-    nodes_by_config:
-      my_alias:
-        - '/^linux/'
-        - 'database_01'
-    command: ssh_run_puppet
+    steps:
+      - name: 'include by config'
+        nodes_by_config:
+          my_alias:
+            - '/^linux/'
+            - 'database_01'
+        command: ssh_run_puppet
 
-```
+#### exclude_nodes, exclude_roles, exclude_nodes_by_config (all optional)
 
-### roles
+| Key                     | Allowed Values   | Default | Since Version |
+|-------------------------|------------------|---------|---------------|
+| exclude_nodes           | Array of Strings | nil     | 0.3           |
+| exclude_roles           | Array of Strings | nil     | 0.3           |
+| exclude_nodes_by_config | Array of Strings | nil     | 0.3           |
 
-This will include all the nodes with a certain role to a step.
+This selectors work exactly like the normal ones as they will assemble a list of nodes from the given criteria.
+Thiose nodes will then be subtracted from the results of the other selectors.
 
-roles and nodes can be mixed, dop_common will simply merge the list of nodes. However there has to be at least one node in every step.
+This is usefull if you for example want to include all nodes of a role, but exclude one or a couple of nodes:
 
-If an entry starts and ends with a '/' DOPi will interpret the string as a regular expression.
+    steps:
+      - name: "run on all puppetmasters but master02"
+        roles:
+          - puppetmaster
+        exclude_nodes:
+          - master02.example.com
 
-roles is basically just a special case for nodes_by_config with the roles variable. But it will do some additional checks and you can also set
-a default value for the role on DOPi.
+### Commands
 
-### exclude_nodes
+| Key      | Allowed Values    | Default | Since Version |
+|----------|-------------------|---------|---------------|
+| commands | String,Hash,Array | nil     | 0.1           |
 
-A list of nodes to exclude from the list that gets assembled from nodes and roles. This can also contain Regex patterns like nodes and roles.
+The commands can either be directly a plugin name if a single plugin and no parameters, a single command
+hash which will be passed to the plugin or an array of command hashes if multiple commands have to be
+executed in a single step. The only fixed variable here is the **plugin** variable. The rest of the variables
+in the command hash depends on the plugin in use and how it will parse the hash.
 
-### exclude_nodes_by_config
+Simple command without parameters:
 
-Exclude nodes based on config values and matching patterns.
+    steps:
+      - name: 'simple puppet run'
+        nodes: 'all'
+        commands: 'ssh/puppet_run'
 
-### exclude_roles
+Command with parameters:
 
-Works exactly like exclude_nodes but excludes roles.
+    steps:
+      - name: 'simple puppet run'
+        nodes: 'all'
+        commands:
+          plugin: 'ssh/puppet_run'
+          arguments: '--noop'
 
-### commands
+Multiple commands in an array:
 
-The commands can either be directly a plugin name if a simgle plugin and no parameters, a single command hash which will be passed to the plugin or an array of command hashes if multiple commands have to be executed in a single step. The only fixed variable here is the **plugin** variable. The rest of the variables in the command hash depends on the plugin in use and how it will parse the hash.
+    steps:
+      - name: 'simple puppet run'
+        nodes: 'all'
+        commands:
+          - plugin: 'ssh/custom'
+            exec: 'yum -y update'
+          - 'ssh/reboot'
+          - 'ssh/puppet_run'
 
-For more documentation about the plugins and the variables available for configuring them, check the DOPi documentation.
-
-
+Parameters for the various plugins are documented in the command plugin section.
