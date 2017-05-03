@@ -302,6 +302,12 @@
 <li><a href="#set-plugin-defaults-optional">set_plugin_defaults (optional)</a></li>
 <li><a href="#delete-plugin-defaults-optional">delete_plugin_defaults (optional)</a></li>
 </ul></li>
+<li><a href="#verify-commands-optional">Verify Commands (optional)</a>
+<ul>
+<li><a href="#verify-after-run-optional">Verify after run (optional)</a></li>
+</ul></li>
+<li><a href="#plugin-timeout-optional">Plugin Timeout (optional)</a></li>
+<li><a href="#title-optional">Title (optional)</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -513,6 +519,116 @@ implemented and may change in the future</p>
 implemented and may change in the future</p>
 </div>
 
+
+<h2 id="verify-commands-optional">Verify Commands (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>verify_commands</td>
+<td>String,Hash,Array</td>
+<td>[]</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+
+<p>The purpose of a verify command is to check if the real command has to be ran. This makes it possible
+to write idempotent step sets which can be executet multiple times to make sure all nodes are deployed
+correctly.</p>
+
+<p>You can define them exactly like you would define a normal command. It accepts a simple string for plugins
+without parameters, a command hash or an array of simple strings and command hashes.</p>
+
+<p>In order to skip the step, all the verify commands have to return in the state &ldquo;done&rdquo;.</p>
+
+<h3 id="verify-after-run-optional">Verify after run (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>verify_after_run</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+
+<p>To make sure the command did all you expected it to do you can also enable this option. If enabled
+it will run the verify commands after the real command again and mark the command as failed if
+they are not successful.</p>
+
+<p>This is disabled by default.</p>
+
+<h2 id="plugin-timeout-optional">Plugin Timeout (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>plugin_timeout</td>
+<td>Numeric</td>
+<td>300</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Dopi will about a command automatically if the plugin timeout is reached. This default may vary for
+different plugins. If you have a long running command you may increase this. The numeric value is the
+amount of seconds it will wait.</p>
+
+<h2 id="title-optional">Title (optional)</h2>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>plugin name</td>
+<td>0.11</td>
+</tr>
+</tbody>
+</table>
+
+<p>A more telling title for the command which is shown in the status output. This is useful if you
+have multiple commands in a step.</p>
 
 
       
