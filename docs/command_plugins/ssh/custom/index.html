@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Infrastructures</title>
+    <title>ssh/custom</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/plan/infrastructures/">
+  <body class="" data-url="/docs-dop/command_plugins/ssh/custom/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -137,7 +137,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -174,7 +174,7 @@
               </a>
             </li>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/plan/infrastructures/">
+            <li class="dd-item " data-nav-id="/docs-dop/plan/infrastructures/">
               <a href="/docs-dop/plan/infrastructures/">
                 <span>Infrastructures     </i></span>
               </a>
@@ -215,7 +215,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/command_plugins/">
+      <li class="dd-item  parent" data-nav-id="/docs-dop/command_plugins/">
         <a href="/docs-dop/command_plugins/">
           <span>
             
@@ -240,7 +240,7 @@
               </a>
             </li>
           
-            <li class="dd-item " data-nav-id="/docs-dop/command_plugins/ssh/custom/">
+            <li class="dd-item active" data-nav-id="/docs-dop/command_plugins/ssh/custom/">
               <a href="/docs-dop/command_plugins/ssh/custom/">
                 <span>ssh/custom     </i></span>
               </a>
@@ -283,11 +283,11 @@
                   
                     
                     
-                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
+                <a href="/docs-dop/command_plugins/" itemprop="url"><span itemprop="title">Command Plugins</span></a> <i class="fa fa-angle-right"></i>
                     
                   
                 
-                <span itemprop="title"> Infrastructures</span>
+                <span itemprop="title"> ssh/custom</span>
               </div>
               
                   <div class="progress">
@@ -296,7 +296,13 @@
 <ul>
 <li>
 <ul>
-<li><a href="#network">Network</a></li>
+<li><a href="#plugin-parameters">Plugin Parameters</a></li>
+<li><a href="#connector-parameters">Connector Parameters</a></li>
+<li><a href="#examples">Examples:</a>
+<ul>
+<li><a href="#simple-example">Simple Example</a></li>
+<li><a href="#complete-example">Complete Example</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -309,140 +315,354 @@
             
               <div id="body-inner">
                 
-                <h1>Infrastructures</h1>
+                <h1>ssh/custom</h1>
                 
 
 
 
-<p>The infrastructures hash holds information about cloud providers. Each entry in
-an infrastructures hash describes a certain infrastructure or cloud if you want.
-It is of hash type. Following is a list of keys:</p>
+<p>This plugin executes custom commands on every node in the step over ssh.</p>
 
-<ol>
-<li><p><strong><em>type</em></strong> - is the type of the infrastructure provider. It is a reuired
-property. The infrastructure provider type can be specified by following values:</p>
+<table>
+<thead>
+<tr>
+<th>Plugin Name</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<ul>
-<li><em>baremetal</em>,</li>
-<li><em>ovirt</em> or <em>rhev</em>,</li>
-<li><em>openstack</em>,</li>
-<li><em>vsphere</em> or <em>vmware</em>.</li>
-</ul>
+<tbody>
+<tr>
+<td>ssh/custom</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
-<p>Please note that <em>rhev</em> and <em>ovirt</em> are synonyms and so are <em>vsphere</em> and <em>vmware</em>.</p></li>
+<h2 id="plugin-parameters">Plugin Parameters</h2>
 
-<li><p><strong><em>endpoint</em></strong> - is an URL that is an entry point for API calls.</p>
+<p><h3 id="exec-required">exec (required)</h3>
 
-<p><strong>IMPORTANT</strong>: This property is required unless the provider type is <em>baremetal</em>.</p></li>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<li><p><strong><em>credentials</em></strong> - A pointer to an entry in credentials hash. Please refer
-to credentials section above for further for further information.</p>
+<tbody>
+<tr>
+<td>exec</td>
+<td>String</td>
+<td>nil</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
-<p><strong>IMPORTANT</strong>: Currently, only one credentials provider is required and
-supported for infrastructure. The credentials must be of
-<strong><em>username_password</em></strong> type.</p>
+<p>The command the plugin should execute for every node.
 
-<p><strong>IMPORTANT</strong>: This property is required unless the provider type is <em>baremetal</em>.</p></li>
+<h3 id="arguments-optional">arguments (optional)</h3>
 
-<li><p><strong><em>networks</em></strong> - provides networks definition hashes. Each network
-definition is hashed by its name that can be an arbitrary string or symbol.
-Please refer to network subsection for further details.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<p><strong>IMPORTANT</strong>: This property is required unless the provider type is <em>baremetal</em>.</p></li>
+<tbody>
+<tr>
+<td>arguments</td>
+<td>String,Hash,Array</td>
+<td>&rdquo;&rdquo;</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
-<li><p><strong><em>affinity_groups</em></strong> - provides affinity groups definition hashes. Each
-affinity group definition itself is a hash. Affinity groups may be provider
-specific. For instance, OVirt/RHEVm infrastructure must define <strong><em>name</em></strong>,
-<strong><em>cluster</em></strong>, <strong><em>positive</em></strong> and <strong><em>enforced</em></strong> properties. Please note
-that some providers may not have affinities implemented, hence this feature
-is optional in deployment plan.</p></li>
-</ol>
+<p>The arguments for the command. This can be set by a string as an array or
+as a hash. All the elements of the hash and the array will be flattened
+and joined with a space.</p>
 
-<p>The following snippet is an example infrastructures configuration:</p>
+<p>The following examples will result all in the same arguments string:</p>
 
-<pre><code>infrastructures:
-  management:
-    type: rhev
-    endpoint: https://rhev.example.com/api/
-    credentials: rhev_api_login
-    networks:
-      management:
-        ip_pool:
-          from: 192.168.254.11
-          to: 192.168.254.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.254.254
-    production:
-        ip_pool:
-          from: 192.168.1.11
-          to: 192.168.1.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.1.254
-    affinity_groups:
-      clu-lab1ch-ag_1:
-        positive: true
-        enforce: true
-        cluster: clu-lab1ch
-      clu-lab1ch-ag_2:
-        positive: true
-        enforce: false
-        cluster: clu-lab1ch
-      clu-lab1ch-ag_3:
-        positive: false
-        enforce: true
-        cluster: clu-lab1ch
-  lamp:
-    type: openstack
-    endpoint: https://openstack.example.com/api/
-    credentials: openstack_api_login
-    networks:
-      management-subnet:
-        ip_pool:
-          from: 192.168.253.11
-          to: 192.168.253.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.253.254
-      production-subnet:
-        ip_pool:
-          from: 192.168.2.11
-          to: 192.168.2.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.2.254
-  db:
-    type: vsphere
-    endpoint: https://vsphere.example.com/api/
-    credentials: vsphere_api_login
-    networks:
-      management:
-        ip_pool:
-          from: 192.168.252.11
-          to: 192.168.252.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.252.254
-      production:
-        ip_pool:
-          from: 192.168.3.11
-          to: 192.168.3.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.3.254
+<pre><code>arguments: &quot;--name foo -s somearg&quot;
+
+arguments:
+  '--name': 'foo'
+  '-s':
+  'somearg':
+
+arguments:
+  - '--name foo'
+  - '-s'
+  - 'somearg'
 </code></pre>
 
-<h2 id="network">Network</h2>
 
-<p>The network hash describes a particular network within a given infrastructure
-provider (cloud). Following are the properties of a network hash:
- 1. <strong><em>ip_pool</em></strong> - a hash of IP addresses which can be assigned to guest VMs.
-    The hash must contain <strong><em>ip_from</em></strong> and <strong><em>ip_to</em></strong> keywords that specify
-    the lower and upper bounds of IP addresses that can be assigned statically.
- 2. <strong><em>ip_netmask</em></strong> - a network mask in octet format.
- 3. <strong><em>ip_defgw</em></strong> - an IP address of the default gateway of the network.</p>
+<h3 id="env-optional">env (optional)</h3>
 
-<p><strong>NOTE</strong>: One might also specify an empty hash <code>{}</code> as netwrok properties in
-case of pure DHCP or NONE-based networks.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<p><strong>IMPORTANT</strong>: Please note that network names must refer to sub-network names
-or their identifiers in case of <a href="http://www.openstack.org/">OpenStack</a> based
-infrastructures.</p>
+<tbody>
+<tr>
+<td>arguments</td>
+<td>Hash</td>
+<td>{ DOP_NODE_FQDN =&gt; fqdn_of_node }</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The environment variables that should be set in the context of the command. Additional
+variables can be defined in a hash which will be merged with the default.</p>
+
+<p>Example:</p>
+
+<pre><code>env:
+  PATH: '/usr/bin:/bin'
+  FOO:  'bar'
+</code></pre>
+
+
+<h3 id="expect-exit-codes-optional">expect_exit_codes (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>expect_exit_codes</td>
+<td>&lsquo;All&rsquo;, Fixnum, Array of Fixnum</td>
+<td>0</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The exit codes DOPi should expect if the command terminates. If the program
+exits with an exit code not listed here, DOPi will mark the run as failed.
+The values can be a number, an array of numbers or &lsquo;all&rsquo; for all possible exit
+codes. This will replace the current default.
+
+<h3 id="parse-output-optional">parse_output (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>parse_output</td>
+<td>Hash</td>
+<td>{}</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Here you can define patterns that match against the output of the command plugin
+and flag certain lines as errors or warnings. The parse_output key should contain
+a hash with two keys, &lsquo;error&rsquo; and &lsquo;warning&rsquo; which each can contain an array of
+regular expressions.</p>
+
+<p>To for example flag all lines starting with &ldquo;Error:&rdquo; as errors define:</p>
+
+<pre><code>parse_output:
+  error:
+    - &quot;^Error&quot;
+</code></pre>
+
+<h3 id="fail-on-warning-optional">fail_on_warning (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>fail_on_warning</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Set this to true if you want to threat warnings in the output as errors. This is
+useful if the plugin already specifies the parsing patterns but your need to stop
+the run on warnings.
+</p>
+
+<h2 id="connector-parameters">Connector Parameters</h2>
+
+<p><h3 id="check-host-key-optional">check_host_key (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>check_host_key</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.12.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>By default the ssh connector  will skip the host key checks. This
+means you will be potentially vulnerable to man in the middle attacks. Since
+DOPi is designed for the provisioning phase you are working with new nodes and
+this will usually not be an issue, however changing keys because nodes get
+new provisioned will be.</p>
+
+<h3 id="quiet-optional">quiet (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>quiet</td>
+<td>true,false</td>
+<td>true</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>By default ssh will run in quiet mode and stuff like login banners will not
+appear in the output. See the documentation about the &ldquo;-q&rdquo; flag in the ssh
+man page for more information about this.</p>
+
+<h3 id="port-optional">port (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>port</td>
+<td>Numeric</td>
+<td>22</td>
+<td>0.10</td>
+</tr>
+</tbody>
+</table>
+
+<p>The port to which ssh should connect</p>
+
+<h3 id="base64-optional">base64 (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>base64</td>
+<td>true,false</td>
+<td>true</td>
+<td>0.12</td>
+</tr>
+</tbody>
+</table>
+
+<p>This will encode the command with base64 before it is added to the commandline
+for the ssh call. This allows to pass complex multiline scripts to the node.</p>
+
+<p>This option is only here for legacy reasons and has usually no use.
+</p>
+
+<h2 id="examples">Examples:</h2>
+
+<h3 id="simple-example">Simple Example</h3>
+
+<pre><code>- name &quot;Say Hello World on a node&quot;
+  nodes:
+    - 'web01.example.com'
+  command:
+    plugin: 'ssh/custom'
+    exec: 'echo'
+    arguments: &quot;Hello World&quot;
+</code></pre>
+
+<h3 id="complete-example">Complete Example</h3>
+
+<pre><code>- name &quot;Install an RPM on the node&quot;
+  nodes:
+    - 'web01.example.com'
+  command:
+    plugin: 'ssh/custom'
+    exec: 'yum'
+    arguments: 'install -y puppet'
+    expect_exit_codes: 0
+    fail_on_warning: False
+    parse_output:
+      error:
+        - '^No package puppet available'
+</code></pre>
 
 
       

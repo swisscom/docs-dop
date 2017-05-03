@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="js csstransforms3d">
   <head>
@@ -10,7 +11,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Infrastructures</title>
+    <title>Command Plugins</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +26,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/plan/infrastructures/">
+  <body class="" data-url="/docs-dop/command_plugins/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -137,7 +138,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -174,7 +175,7 @@
               </a>
             </li>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/plan/infrastructures/">
+            <li class="dd-item " data-nav-id="/docs-dop/plan/infrastructures/">
               <a href="/docs-dop/plan/infrastructures/">
                 <span>Infrastructures     </i></span>
               </a>
@@ -215,7 +216,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/command_plugins/">
+      <li class="dd-item active parent" data-nav-id="/docs-dop/command_plugins/">
         <a href="/docs-dop/command_plugins/">
           <span>
             
@@ -275,177 +276,228 @@
                       </a>
                   </span>
                 
-                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
-                
                 
                   
                   
                   
                     
                     
-                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
-                    
                   
                 
-                <span itemprop="title"> Infrastructures</span>
+                <span itemprop="title"> Command Plugins</span>
               </div>
-              
-                  <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#network">Network</a></li>
-</ul></li>
-</ul>
-</nav>
-    </div>
-</div>
-
               
 
             </div>
             
+              <div id="chapter">
+            
               <div id="body-inner">
                 
-                <h1>Infrastructures</h1>
-                
 
 
 
-<p>The infrastructures hash holds information about cloud providers. Each entry in
-an infrastructures hash describes a certain infrastructure or cloud if you want.
-It is of hash type. Following is a list of keys:</p>
+<p>Command plugins are some simple pieces of code which allow you to do certain actions or check certain things on a node.</p>
 
-<ol>
-<li><p><strong><em>type</em></strong> - is the type of the infrastructure provider. It is a reuired
-property. The infrastructure provider type can be specified by following values:</p>
+<p>Each plugin uses a specific connector to connect to a node and execute the commands. This is specified by the fist part
+of the command plugin name, the second part is the name of the function: connector/function</p>
 
-<ul>
-<li><em>baremetal</em>,</li>
-<li><em>ovirt</em> or <em>rhev</em>,</li>
-<li><em>openstack</em>,</li>
-<li><em>vsphere</em> or <em>vmware</em>.</li>
-</ul>
+<p>DOP does not aspire to be a configuration management tool on its own and therefor the amount of plugins and possibilities
+are somewhat limited. The idea is to give you the tools to run puppet in the right order and maybe place or change some
+needed files to make sure the node can connect to the master.</p>
 
-<p>Please note that <em>rhev</em> and <em>ovirt</em> are synonyms and so are <em>vsphere</em> and <em>vmware</em>.</p></li>
+<p>There are currently three supported connectors: winrm, ssh and mcollective.</p>
 
-<li><p><strong><em>endpoint</em></strong> - is an URL that is an entry point for API calls.</p>
+<p>Winrm and ssh both use the credentials hash for authentication. For Mcollective you need to point to the mco configuration
+file in your dop configuration file.</p>
 
-<p><strong>IMPORTANT</strong>: This property is required unless the provider type is <em>baremetal</em>.</p></li>
+<h2 id="credentials-for-login">credentials for login</h2>
 
-<li><p><strong><em>credentials</em></strong> - A pointer to an entry in credentials hash. Please refer
-to credentials section above for further for further information.</p>
+<p>The plugins which use the ssh and winrm connector can use credentials from the credentials hash in the plan to login.
+More information about the credentials hash itself can be found in the plan chapter under credentials.</p>
 
-<p><strong>IMPORTANT</strong>: Currently, only one credentials provider is required and
-supported for infrastructure. The credentials must be of
-<strong><em>username_password</em></strong> type.</p>
+<p>Here is a simple example of a ssh username/password login</p>
 
-<p><strong>IMPORTANT</strong>: This property is required unless the provider type is <em>baremetal</em>.</p></li>
+<pre><code>credentials:
+  'linux_staging_login':
+    type: :username_password
+    username: 'root'
+    password: 'foo'
 
-<li><p><strong><em>networks</em></strong> - provides networks definition hashes. Each network
-definition is hashed by its name that can be an arbitrary string or symbol.
-Please refer to network subsection for further details.</p>
-
-<p><strong>IMPORTANT</strong>: This property is required unless the provider type is <em>baremetal</em>.</p></li>
-
-<li><p><strong><em>affinity_groups</em></strong> - provides affinity groups definition hashes. Each
-affinity group definition itself is a hash. Affinity groups may be provider
-specific. For instance, OVirt/RHEVm infrastructure must define <strong><em>name</em></strong>,
-<strong><em>cluster</em></strong>, <strong><em>positive</em></strong> and <strong><em>enforced</em></strong> properties. Please note
-that some providers may not have affinities implemented, hence this feature
-is optional in deployment plan.</p></li>
-</ol>
-
-<p>The following snippet is an example infrastructures configuration:</p>
-
-<pre><code>infrastructures:
-  management:
-    type: rhev
-    endpoint: https://rhev.example.com/api/
-    credentials: rhev_api_login
-    networks:
-      management:
-        ip_pool:
-          from: 192.168.254.11
-          to: 192.168.254.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.254.254
-    production:
-        ip_pool:
-          from: 192.168.1.11
-          to: 192.168.1.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.1.254
-    affinity_groups:
-      clu-lab1ch-ag_1:
-        positive: true
-        enforce: true
-        cluster: clu-lab1ch
-      clu-lab1ch-ag_2:
-        positive: true
-        enforce: false
-        cluster: clu-lab1ch
-      clu-lab1ch-ag_3:
-        positive: false
-        enforce: true
-        cluster: clu-lab1ch
-  lamp:
-    type: openstack
-    endpoint: https://openstack.example.com/api/
-    credentials: openstack_api_login
-    networks:
-      management-subnet:
-        ip_pool:
-          from: 192.168.253.11
-          to: 192.168.253.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.253.254
-      production-subnet:
-        ip_pool:
-          from: 192.168.2.11
-          to: 192.168.2.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.2.254
-  db:
-    type: vsphere
-    endpoint: https://vsphere.example.com/api/
-    credentials: vsphere_api_login
-    networks:
-      management:
-        ip_pool:
-          from: 192.168.252.11
-          to: 192.168.252.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.252.254
-      production:
-        ip_pool:
-          from: 192.168.3.11
-          to: 192.168.3.245
-        ip_netmask: 255.255.255.0
-        ip_defgw: 192.168.3.254
+steps:
+  - name: 'set ssh login credentials'
+    command:
+      plugin: 'ssh/custom'
+      credentials: 'linux_staging_login'
+      exec: 'env'
 </code></pre>
 
-<h2 id="network">Network</h2>
+<p>You can also specify multiple credentials and the connectors will try each one
+of them in turn to login to the node.</p>
 
-<p>The network hash describes a particular network within a given infrastructure
-provider (cloud). Following are the properties of a network hash:
- 1. <strong><em>ip_pool</em></strong> - a hash of IP addresses which can be assigned to guest VMs.
-    The hash must contain <strong><em>ip_from</em></strong> and <strong><em>ip_to</em></strong> keywords that specify
-    the lower and upper bounds of IP addresses that can be assigned statically.
- 2. <strong><em>ip_netmask</em></strong> - a network mask in octet format.
- 3. <strong><em>ip_defgw</em></strong> - an IP address of the default gateway of the network.</p>
+<pre><code>credentials:
+  'linux_staging_login':
+    type: :username_password
+    username: 'root'
+    password: 'foo'
+  'linux_prod_login':
+    type: :ssh_key
+    private_key: '/home/root/.ssh/id_dsa'
 
-<p><strong>NOTE</strong>: One might also specify an empty hash <code>{}</code> as netwrok properties in
-case of pure DHCP or NONE-based networks.</p>
+steps:
+  - name: 'set ssh login credentials'
+    command:
+      plugin: 'ssh/custom'
+      credentials:
+        - 'linux_staging_login'
+        - 'linux_prod_login'
+      exec: 'env'
+</code></pre>
 
-<p><strong>IMPORTANT</strong>: Please note that network names must refer to sub-network names
-or their identifiers in case of <a href="http://www.openstack.org/">OpenStack</a> based
-infrastructures.</p>
+<p>This can be set in each plugin (don&rsquo;t forget the validator plugins) or via
+the set_plugin_defaults hash. The plugin defaults will be preserved for
+subsequent steps until it is altered or deleted. More about this feature in the next section.</p>
+
+<pre><code>credentials:
+  'linux_staging_login':
+    type: :username_password
+    username: 'root'
+    password: 'foo'
+  'linux_prod_login':
+    type: :ssh_key
+    private_key: '/home/root/.ssh/id_dsa'
+
+steps:
+  - name: 'set ssh login credentials'
+    set_plugin_defaults:
+      - plugins: '/^ssh/'
+        :credentials:
+          - 'linux_staging_login'
+          - 'linux_prod_login'
+    command:
+      plugin: 'ssh/custom'
+      exec: 'env'
+</code></pre>
+
+<p>The login via password for the ssh connector will need the program sshpass to be installed on the
+machine DOPi is running on. DOPi will display a warning if you specify a username password credential
+but sshpass is not installed.</p>
+
+<h3 id="plugin-defaults">Plugin Defaults</h3>
+
+<p>Sometimes you have some settings, like the credentials settings for connectors for example, which you
+have to specify on every single plugin. To make this easier you can set plugin defaults.</p>
+
+<p>The defaults will be active from the step where you specified for all following steps. They can then be
+overwritten in later steps by explicitely defining the setting or by defining new defaults. It is also
+possible to remove the defaults again.</p>
+
+<h3 id="set-plugin-defaults-optional">set_plugin_defaults (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>set_plugin_defaults</td>
+<td>Array</td>
+<td>nil</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+
+<p>With &ldquo;set_plugin_defaults&rdquo; it is possible to specify some default values for plugin configuration which will persist
+over subsequent runs.</p>
+
+<p>The settings are node specific, so they will only be set for the nodes in your step. You can select the plugins for which
+this applies with a list or with regular expressions.</p>
+
+<p>Direct settings in the plugins will always overwrite the defaults.</p>
+
+<p>Example:</p>
+
+<pre><code>steps:
+  - name: &quot;Set default passwords for Plugins&quot;
+    nodes: all
+    set_plugin_defaults:
+      - plugins: '/^ssh/'
+        :credentials: 'linux_staging_password'
+      - plugins: '/^winrm/'
+        :credentials: 'windows_staging_password'
+      - plugins:
+        - 'ssh/custom'
+        :quiet: false
+</code></pre>
+
+<div class="notices info" ><p>The keys you want to set have to be ruby symbols. This is a current limitation of the way the parser is
+implemented and may change in the future</p>
+</div>
+
+
+<h3 id="delete-plugin-defaults">delete_plugin_defaults</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>delete_plugin_defaults</td>
+<td>Array</td>
+<td>nil</td>
+<td>0.4</td>
+</tr>
+</tbody>
+</table>
+
+<p>There are several possibilities how you can remove plugin settings with &ldquo;delete_plugin_defaults&rdquo;</p>
+
+<p>Example:</p>
+
+<pre><code>steps:
+  - name: &quot;Remove some specific defaults for all nodes&quot;
+    nodes: all
+    delete_plugin_defaults:
+      - plugins: '/^ssh/'
+        delete_keys:
+          - :credentials
+          - :timeout
+
+  - name: &quot;Remove all the defaults for the ssh plugins for all nodes in role 'foo'&quot;
+    roles:
+      - foo
+    delete_plugin_defaults:
+      - plugins: '/^ssh/'
+        delete_keys: all
+
+  - name: &quot;Remove all the defaults for all plugins for all nodes&quot;
+    nodes: all
+    delete_plugin_defaults: all
+</code></pre>
+
+<div class="notices info" ><p>The keys you want to set have to be ruby symbols. This is a current limitation of the way the parser is
+implemented and may change in the future</p>
+</div>
+
 
 
       
+      
+        </div> 
       
       </div>
     </div>
@@ -477,4 +529,5 @@ infrastructures.</p>
 
   </body>
 </html>
+
 

@@ -36,6 +36,19 @@
 
     </div>
     
+        <div class="searchbox">
+    <label for="search-by"><i class="fa fa-search"></i></label>
+    <input id="search-by" type="text" placeholder="Search">
+    <span data-search-clear=""><i class="fa fa-close"></i></span>
+</div>
+<script type="text/javascript" src="https://swisscom.github.io/docs-dop//js/lunr.min.js"></script>
+<script type="text/javascript" src="https://swisscom.github.io/docs-dop//js/horsey.js"></script>
+<script type="text/javascript">
+    var baseurl = "https:\/\/swisscom.github.io\/docs-dop\/";
+</script>
+<script type="text/javascript" src="https://swisscom.github.io/docs-dop//js/search.js"></script>
+
+    
 </div>
 
 
@@ -54,7 +67,14 @@
             
           
         
+          
+          
+            
+          
         
+        
+        
+          
         
           
         
@@ -87,6 +107,12 @@
         </a>
         
         <ul>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/overview/about/">
+              <a href="/docs-dop/overview/about/">
+                <span>About     </i></span>
+              </a>
+            </li>
           
             <li class="dd-item " data-nav-id="/docs-dop/overview/architecture/">
               <a href="/docs-dop/overview/architecture/">
@@ -177,6 +203,54 @@
       </li>
       
       
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/docs-dop/command_plugins/">
+        <a href="/docs-dop/command_plugins/">
+          <span>
+            
+              <b>3. </b>
+            
+             Command Plugins
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/command_plugins/overview/">
+              <a href="/docs-dop/command_plugins/overview/">
+                <span>Overview     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/command_plugins/custom/">
+              <a href="/docs-dop/command_plugins/custom/">
+                <span>custom     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/docs-dop/command_plugins/ssh/custom/">
+              <a href="/docs-dop/command_plugins/ssh/custom/">
+                <span>ssh/custom     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
     </ul>
     <hr>
      
@@ -224,16 +298,15 @@
 <ul>
 <li>
 <ul>
-<li><a href="#name">name</a></li>
-<li><a href="#nodes">nodes</a></li>
-<li><a href="#set-plugin-defaults">set_plugin_defaults</a></li>
-<li><a href="#delete-plugin-defaults">delete_plugin_defaults</a></li>
-<li><a href="#nodes-by-config">nodes_by_config</a></li>
-<li><a href="#roles">roles</a></li>
-<li><a href="#exclude-nodes">exclude_nodes</a></li>
-<li><a href="#exclude-nodes-by-config">exclude_nodes_by_config</a></li>
-<li><a href="#exclude-roles">exclude_roles</a></li>
-<li><a href="#commands">commands</a></li>
+<li><a href="#name">Name</a></li>
+<li><a href="#node-selectors">Node selectors</a>
+<ul>
+<li><a href="#nodes-optional">nodes (optional)</a></li>
+<li><a href="#roles-optional">roles (optional)</a></li>
+<li><a href="#nodes-by-config-optional">nodes_by_config (optional)</a></li>
+<li><a href="#exclude-nodes-exclude-roles-exclude-nodes-by-config-all-optional">exclude_nodes, exclude_roles, exclude_nodes_by_config (all optional)</a></li>
+</ul></li>
+<li><a href="#commands">Commands</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -252,7 +325,8 @@
 
 
 
-<p>The steps array is a list of commands that have to be executed in the correct order. Each element in the array contains a hash of settings which describe the step, the nodes involved and the command to execute.</p>
+<p>The steps array is a list of commands that have to be executed in the correct order. Each element in the
+array contains a hash of settings which describe the step, the nodes involved and the command to execute.</p>
 
 <p>Example:</p>
 
@@ -315,85 +389,138 @@
 <p>The run command will always execute the &lsquo;default&rsquo; step set if nothing else is specified. If only one set is
 specified in the array form without a name this set will have the name &lsquo;default&rsquo;.</p>
 
-<h3 id="name">name</h3>
+<h3 id="name">Name</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>nil</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
 <p>The name is just an identifier for the step. You should chose a name that best describes what you are doing in this step.</p>
 
-<h3 id="nodes">nodes</h3>
+<h3 id="node-selectors">Node selectors</h3>
 
-<p>This can either be one or a list of nodes and/or Regex patterns or the keyword &ldquo;all&rdquo; which will include all nodes for the step.</p>
+<p>A step always runs for a collection of nodes. This can be a single node, an array of hand picked nodes, all
+nodes in a role or various other possibilities. To make it easy to select the right nodes, DOP provides a couple of
+node selectors.</p>
+
+<h4 id="nodes-optional">nodes (optional)</h4>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>nodes</td>
+<td>Array of Strings</td>
+<td>nil</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The nodes node-selector directly selects nodes based on their names. This can be a simple list of names but it may also contain Regular expression patterns to select nodes. In addition the keywor &ldquo;all&rdquo; may be used to select all of the nodes in the plan.</p>
 
 <p>If an entry starts and ends with a &lsquo;/&rsquo; DOPi will interpret the string as a regular expression.</p>
 
-<h3 id="set-plugin-defaults">set_plugin_defaults</h3>
+<p>Include a simple list of nodes:</p>
 
-<p>(This will be in DOPi &gt;= 0.4)</p>
-
-<p>With &ldquo;set_plugin_defaults&rdquo; it is possible to specify some default values for plugin configuration which will persist over subsequent runs.</p>
-
-<p>The settings are node specific, so they will only be set for the nodes in your step. You can select the plugins for which this applies with
-a list or with regular expressions.</p>
-
-<p>Direct settings in the plugins will always overwrite the defaults.</p>
-
-<p>IMPORTANT: The keys you want to set have to be ruby symbols. This is a current limitation of the way the parser is implemented and may change in the future</p>
-
-<p>Example:</p>
-
-<pre><code class="language-yaml">
-steps:
-  - name: &quot;Set default passwords for Plugins&quot;
-    nodes: all
-    set_plugin_defaults:
-      - plugins: '/^ssh/'
-        :credentials: 'linux_staging_password'
-      - plugins: '/^winrm/'
-        :credentials: 'windows_staging_password'
-      - plugins:
-        - 'ssh/custom'
-        :quiet: false
-
+<pre><code>steps:
+  - name: &quot;exec on some nodes&quot;
+    nodes:
+      - linux01.example.com
+      - linux02.example.com
 </code></pre>
 
-<h3 id="delete-plugin-defaults">delete_plugin_defaults</h3>
+<p>Include nodes based on a regular expression:</p>
 
-<p>(This will be in DOPi &gt;= 0.4)</p>
-
-<p>There are several possibilities how you can remove plugin settings with &ldquo;delete_plugin_defaults&rdquo;</p>
-
-<p>IMPORTANT: The keys you want to set have to be ruby symbols. This is a current limitation of the way the parser is implemented and may change in the future</p>
-
-<p>Example:</p>
-
-<pre><code class="language-yaml">  - name: &quot;Remove some specific defaults for all nodes&quot;
-    nodes: all
-    delete_plugin_defaults:
-      - plugins: '/^ssh/'
-        delete_keys:
-          - :credentials
-          - :timeout
-
-  - name: &quot;Remove all the defaults for the ssh plugins for all nodes in role 'foo'&quot;
-    roles:
-      - foo
-    delete_plugin_defaults:
-      - plugins: '/^ssh/'
-        delete_keys: all
-
-  - name: &quot;Remove all the defaults for all plugins for all nodes&quot;
-    nodes: all
-    delete_plugin_defaults: all
-
+<pre><code>steps:
+  - name: &quot;exec on some nodes&quot;
+    nodes:
+      - /linux\d+.example.com/
 </code></pre>
 
-<h3 id="nodes-by-config">nodes_by_config</h3>
+<h4 id="roles-optional">roles (optional)</h4>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>roles</td>
+<td>Array of Strings</td>
+<td>nil</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>This will include all the nodes with a certain role to a step.</p>
+
+<p>roles and nodes can be mixed, dop_common will simply merge the list of nodes. However there has to be at least
+one node in the resulting list in every step.</p>
+
+<p>As in the node selector, if an entry starts and ends with a &lsquo;/&rsquo; DOPi will interpret the string as a regular expression.</p>
+
+<p>roles is basically just a special case for nodes_by_config with the roles variable. But it will do some additional
+checks and you can also set a default value for the role.</p>
+
+<h4 id="nodes-by-config-optional">nodes_by_config (optional)</h4>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>nodes_by_config</td>
+<td>Array of Strings</td>
+<td>nil</td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
 
 <p>Include nodes to a step by specific configuration values which are resolved over hiera.</p>
 
 <p>Example:</p>
 
-<pre><code class="language-yaml">
-configuration:
+<pre><code>configuration:
   nodes:
     'mysql01.example.com':
       'my_alias': 'database_01'
@@ -403,15 +530,13 @@ steps:
     nodes_by_config:
       'my_alias': 'database_01'
     command: ssh_run_puppet
-
 </code></pre>
 
-<p>If the value of the config variable is an array it will check each value in that array. You can also use pattern here like with node</p>
+<p>If the value of the config variable is an array it will check each value in that array. You can also use patterns the way you can use them in the other selectors.</p>
 
 <p>Example:</p>
 
-<pre><code class="language-yaml">
-configuration:
+<pre><code>configuration:
   nodes:
     'mysql01.example.com':
       'my_alias':
@@ -425,37 +550,115 @@ steps:
         - '/^linux/'
         - 'database_01'
     command: ssh_run_puppet
-
 </code></pre>
 
-<h3 id="roles">roles</h3>
+<h4 id="exclude-nodes-exclude-roles-exclude-nodes-by-config-all-optional">exclude_nodes, exclude_roles, exclude_nodes_by_config (all optional)</h4>
 
-<p>This will include all the nodes with a certain role to a step.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<p>roles and nodes can be mixed, dop_common will simply merge the list of nodes. However there has to be at least one node in every step.</p>
+<tbody>
+<tr>
+<td>exclude_nodes</td>
+<td>Array of Strings</td>
+<td>nil</td>
+<td>0.3</td>
+</tr>
 
-<p>If an entry starts and ends with a &lsquo;/&rsquo; DOPi will interpret the string as a regular expression.</p>
+<tr>
+<td>exclude_roles</td>
+<td>Array of Strings</td>
+<td>nil</td>
+<td>0.3</td>
+</tr>
 
-<p>roles is basically just a special case for nodes_by_config with the roles variable. But it will do some additional checks and you can also set
-a default value for the role on DOPi.</p>
+<tr>
+<td>exclude_nodes_by_config</td>
+<td>Array of Strings</td>
+<td>nil</td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
 
-<h3 id="exclude-nodes">exclude_nodes</h3>
+<p>This selectors work exactly like the normal ones as they will assemble a list of nodes from the given criteria.
+Thiose nodes will then be subtracted from the results of the other selectors.</p>
 
-<p>A list of nodes to exclude from the list that gets assembled from nodes and roles. This can also contain Regex patterns like nodes and roles.</p>
+<p>This is usefull if you for example want to include all nodes of a role, but exclude one or a couple of nodes:</p>
 
-<h3 id="exclude-nodes-by-config">exclude_nodes_by_config</h3>
+<pre><code>steps:
+  - name: &quot;run on all puppetmasters but master02&quot;
+    roles:
+      - puppetmaster
+    exclude_nodes:
+      - master02.example.com
+</code></pre>
 
-<p>Exclude nodes based on config values and matching patterns.</p>
+<h3 id="commands">Commands</h3>
 
-<h3 id="exclude-roles">exclude_roles</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<p>Works exactly like exclude_nodes but excludes roles.</p>
+<tbody>
+<tr>
+<td>commands</td>
+<td>String,Hash,Array</td>
+<td>nil</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
-<h3 id="commands">commands</h3>
+<p>The commands can either be directly a plugin name if a single plugin and no parameters, a single command
+hash which will be passed to the plugin or an array of command hashes if multiple commands have to be
+executed in a single step. The only fixed variable here is the <strong>plugin</strong> variable. The rest of the variables
+in the command hash depends on the plugin in use and how it will parse the hash.</p>
 
-<p>The commands can either be directly a plugin name if a simgle plugin and no parameters, a single command hash which will be passed to the plugin or an array of command hashes if multiple commands have to be executed in a single step. The only fixed variable here is the <strong>plugin</strong> variable. The rest of the variables in the command hash depends on the plugin in use and how it will parse the hash.</p>
+<p>Simple command without parameters:</p>
 
-<p>For more documentation about the plugins and the variables available for configuring them, check the DOPi documentation.</p>
+<pre><code>steps:
+  - name: 'simple puppet run'
+    nodes: 'all'
+    commands: 'ssh/puppet_run'
+</code></pre>
+
+<p>Command with parameters:</p>
+
+<pre><code>steps:
+  - name: 'simple puppet run'
+    nodes: 'all'
+    commands:
+      plugin: 'ssh/puppet_run'
+      arguments: '--noop'
+</code></pre>
+
+<p>Multiple commands in an array:</p>
+
+<pre><code>steps:
+  - name: 'simple puppet run'
+    nodes: 'all'
+    commands:
+      - plugin: 'ssh/custom'
+        exec: 'yum -y update'
+      - 'ssh/reboot'
+      - 'ssh/puppet_run'
+</code></pre>
+
+<p>Parameters for the various plugins are documented in the command plugin section.</p>
 
 
       

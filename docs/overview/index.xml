@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>About</title>
+      <link>https://swisscom.github.io/docs-dop/overview/about/</link>
+      <pubDate>Wed, 03 May 2017 15:42:43 +0200</pubDate>
+      
+      <guid>https://swisscom.github.io/docs-dop/overview/about/</guid>
+      <description>What is DOP? DOP is a collection of ruby gems and rails applications which each do it&amp;rsquo;s part to automate your deployment. Each component solves a separate problem and can be used on it&amp;rsquo;s own. But they can all be combinet to completely automate the deployment of your infrastructure over a single API.
+What it isn&amp;rsquo;t? DOP is not another configuration management tool. The goal is not to replace Puppet but to bridge the gap from describing your infrastructure to deploying them in your IAAS platform.</description>
+    </item>
+    
+    <item>
       <title>Architecture</title>
       <link>https://swisscom.github.io/docs-dop/overview/architecture/</link>
       <pubDate>Mon, 10 Apr 2017 16:34:07 +0200</pubDate>
