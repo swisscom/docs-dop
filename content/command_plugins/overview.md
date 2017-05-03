@@ -166,3 +166,48 @@ implemented and may change in the future
 {{% /notice %}}
 
 
+## Verify Commands (optional)
+
+| Key             | Allowed Values    | Default | Since Version |
+|-----------------|-------------------|---------|---------------|
+| verify_commands | String,Hash,Array | []      | 0.4           |
+
+The purpose of a verify command is to check if the real command has to be ran. This makes it possible
+to write idempotent step sets which can be executet multiple times to make sure all nodes are deployed
+correctly.
+
+You can define them exactly like you would define a normal command. It accepts a simple string for plugins
+without parameters, a command hash or an array of simple strings and command hashes.
+
+In order to skip the step, all the verify commands have to return in the state "done".
+
+### Verify after run (optional)
+
+| Key              | Allowed Values    | Default | Since Version |
+|------------------|-------------------|---------|---------------|
+| verify_after_run | true,false        | false   | 0.2           |
+
+To make sure the command did all you expected it to do you can also enable this option. If enabled
+it will run the verify commands after the real command again and mark the command as failed if
+they are not successful.
+
+This is disabled by default.
+
+## Plugin Timeout (optional)
+
+| Key            | Allowed Values    | Default | Since Version |
+|----------------|-------------------|---------|---------------|
+| plugin_timeout | Numeric           | 300     | 0.1           |
+
+Dopi will about a command automatically if the plugin timeout is reached. This default may vary for
+different plugins. If you have a long running command you may increase this. The numeric value is the
+amount of seconds it will wait.
+
+## Title (optional)
+
+| Key   | Allowed Values    | Default     | Since Version |
+|-------|-------------------|-------------|---------------|
+| title | String            | plugin name | 0.11          |
+
+A more telling title for the command which is shown in the status output. This is useful if you
+have multiple commands in a step.
