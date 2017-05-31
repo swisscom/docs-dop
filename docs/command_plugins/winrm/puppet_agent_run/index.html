@@ -604,7 +604,149 @@ the run on warnings.
 
 <h2 id="connector-parameters">Connector Parameters</h2>
 
-<p>TBD
+<p><h3 id="port-optional">port (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>port</td>
+<td>1 - 65536</td>
+<td>5985</td>
+<td>0.4.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>The winrm port on the target machine</p>
+
+<h3 id="ssl-optional">ssl (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ssl</td>
+<td>true, false</td>
+<td>true</td>
+<td>0.4.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>Use ssl for transport encryption</p>
+
+<h3 id="ca-trust-path-optional">ca_trust_path (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ca_trust_path</td>
+<td>String</td>
+<td>nil</td>
+<td>0.4.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>The path to the ca used for the ssl certificates</p>
+
+<h3 id="disable-sspi-optional">disable_sspi (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>disable_sspi</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.4.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>Disable SSPI</p>
+
+<h3 id="basic-auth-only-optional">basic_auth_only (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>basic_auth_only</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.4.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>Use only basic auth</p>
+
+<h3 id="operation-timeout-optional">operation_timeout (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>operation_timeout</td>
+<td>&gt; 0</td>
+<td>plugin_timeout -5</td>
+<td>0.13.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>Timeout for the command until it trows an error if it does not return
 </p>
 
 <h2 id="examples">Examples:</h2>
