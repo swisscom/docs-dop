@@ -62,6 +62,16 @@ In the future this may also be used to do templating, but this is not implemente
     </item>
     
     <item>
+      <title>ssh/puppet_agent_run</title>
+      <link>https://swisscom.github.io/docs-dop/command_plugins/ssh/puppet_agent_run/</link>
+      <pubDate>Wed, 31 May 2017 12:41:27 +0200</pubDate>
+      
+      <guid>https://swisscom.github.io/docs-dop/command_plugins/ssh/puppet_agent_run/</guid>
+      <description>This plugin runs puppet on a node and features some important workarounds for common problems encountered when doing so, like waiting if a run is already in progress or doing reruns on errors if configured.
+   Plugin Name Since Version     ssh/puppet_agent_run 0.1    Plugin Parameters rerun_on_change (optional)    Key Allowed Values Default Since Version     rerun_on_change true,false false 0.</description>
+    </item>
+    
+    <item>
       <title>Global Settings</title>
       <link>https://swisscom.github.io/docs-dop/plan/global_settings/</link>
       <pubDate>Tue, 18 Apr 2017 13:41:46 +0200</pubDate>
@@ -80,6 +90,16 @@ name (optional)    Key Allowed Values Default Since Version     name /[\w-]+/ (s
       <description>The credentials hash can hold credentials used to login to systems, APIs or to set passwords or keys during setup.
 Example:
 credentials: &#39;linux_staging_login&#39;: type: :username_password username: &#39;root&#39; password: &#39;foo&#39; &#39;linux_prod_login&#39;: type: :ssh_key private_key: &#39;/home/root/.ssh/id_dsa&#39; &#39;windows_staging_login&#39;: type: :username_password username: &#39;administrator&#39; password: &#39;winfoo&#39; &#39;windows_prod_login&#39;: type: :kerberos realm: &#39;FOOOO&#39;  The various DOPi plugins can use these credentials to login to a node if the type is supported by the plugin. It is recommended to use the set_plugin_defaults mechanic to set this credentials so it does not have to be specified in every command separately.</description>
+    </item>
+    
+    <item>
+      <title>winrm/puppet_agent_run</title>
+      <link>https://swisscom.github.io/docs-dop/command_plugins/winrm/puppet_agent_run/</link>
+      <pubDate>Wed, 31 May 2017 12:41:27 +0200</pubDate>
+      
+      <guid>https://swisscom.github.io/docs-dop/command_plugins/winrm/puppet_agent_run/</guid>
+      <description>This plugin runs puppet on a node and features some important workarounds for common problems encountered when doing so, like waiting if a run is already in progress or doing reruns on errors if configured.
+   Plugin Name Since Version     winrm/puppet_agent_run 0.13.0    Plugin Parameters rerun_on_change (optional)    Key Allowed Values Default Since Version     rerun_on_change true,false false 0.</description>
     </item>
     
     <item>

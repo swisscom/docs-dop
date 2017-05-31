@@ -37,6 +37,11 @@
   </url>
   
   <url>
+    <loc>https://swisscom.github.io/docs-dop/command_plugins/ssh/puppet_agent_run/</loc>
+    <lastmod>2017-05-31T12:41:27+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://swisscom.github.io/docs-dop/plan/global_settings/</loc>
     <lastmod>2017-04-18T13:41:46+02:00</lastmod>
   </url>
@@ -44,6 +49,11 @@
   <url>
     <loc>https://swisscom.github.io/docs-dop/plan/credentials/</loc>
     <lastmod>2017-04-18T13:35:06+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://swisscom.github.io/docs-dop/command_plugins/winrm/puppet_agent_run/</loc>
+    <lastmod>2017-05-31T12:41:27+02:00</lastmod>
   </url>
   
   <url>

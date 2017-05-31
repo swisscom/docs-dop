@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Pre-processor</title>
+    <title>ssh/puppet_agent_run</title>
     <link href="https://swisscom.github.io/docs-dop//css/nucleus.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/font-awesome.min.css" rel="stylesheet">
     <link href="https://swisscom.github.io/docs-dop//css/hybrid.css" rel="stylesheet">
@@ -25,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/docs-dop/plan/pre_processor/">
+  <body class="" data-url="/docs-dop/command_plugins/ssh/puppet_agent_run/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -137,7 +137,7 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/docs-dop/plan/">
+      <li class="dd-item  " data-nav-id="/docs-dop/plan/">
         <a href="/docs-dop/plan/">
           <span>
             
@@ -150,7 +150,7 @@
         
         <ul>
           
-            <li class="dd-item active" data-nav-id="/docs-dop/plan/pre_processor/">
+            <li class="dd-item " data-nav-id="/docs-dop/plan/pre_processor/">
               <a href="/docs-dop/plan/pre_processor/">
                 <span>Pre-processor     </i></span>
               </a>
@@ -215,7 +215,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/docs-dop/command_plugins/">
+      <li class="dd-item  parent" data-nav-id="/docs-dop/command_plugins/">
         <a href="/docs-dop/command_plugins/">
           <span>
             
@@ -246,7 +246,7 @@
               </a>
             </li>
           
-            <li class="dd-item " data-nav-id="/docs-dop/command_plugins/ssh/puppet_agent_run/">
+            <li class="dd-item active" data-nav-id="/docs-dop/command_plugins/ssh/puppet_agent_run/">
               <a href="/docs-dop/command_plugins/ssh/puppet_agent_run/">
                 <span>ssh/puppet_agent_run     </i></span>
               </a>
@@ -295,11 +295,11 @@
                   
                     
                     
-                <a href="/docs-dop/plan/" itemprop="url"><span itemprop="title">Plan</span></a> <i class="fa fa-angle-right"></i>
+                <a href="/docs-dop/command_plugins/" itemprop="url"><span itemprop="title">Command Plugins</span></a> <i class="fa fa-angle-right"></i>
                     
                   
                 
-                <span itemprop="title"> Pre-processor</span>
+                <span itemprop="title"> ssh/puppet_agent_run</span>
               </div>
               
                   <div class="progress">
@@ -308,7 +308,13 @@
 <ul>
 <li>
 <ul>
-<li><a href="#includes">Includes</a></li>
+<li><a href="#plugin-parameters">Plugin Parameters</a></li>
+<li><a href="#connector-parameters">Connector Parameters</a></li>
+<li><a href="#examples">Examples:</a>
+<ul>
+<li><a href="#simple-example">Simple Example</a></li>
+<li><a href="#complete-example">Complete Example</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -321,56 +327,411 @@
             
               <div id="body-inner">
                 
-                <h1>Pre-processor</h1>
+                <h1>ssh/puppet_agent_run</h1>
                 
 
 
 
-<p>The pre-processor is something which only applies if you load plans from a file and
-not if you use dop as a library and feed the plan as a hash. The pre-processor renders
-the plan before it gets loaded by the parser.</p>
+<p>This plugin runs puppet on a node and features some important workarounds for common
+problems encountered when doing so, like waiting if a run is already in progress or
+doing reruns on errors if configured.</p>
 
-<p>The only feature implemented at the moment is includes, which allows you to split your
-plans into multiple files and possible reuse parts between different plans.</p>
+<table>
+<thead>
+<tr>
+<th>Plugin Name</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<p>In the future this may also be used to do templating, but this is not implemented yet.</p>
+<tbody>
+<tr>
+<td>ssh/puppet_agent_run</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
-<h2 id="includes">Includes</h2>
+<h2 id="plugin-parameters">Plugin Parameters</h2>
 
-<p>From DOPi &gt;= 0.16, DOPv &gt;= 0.8 on the DOP plan format supports includes. Before
-DOP will parse the plan there is now a preprocessor step which will replace all
-&ldquo;include: <file>&rdquo; statements with the content of the file.</p>
+<p><h3 id="rerun-on-change-optional">rerun_on_change (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>rerun_on_change</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.18.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>If the return code of puppet indicates that there where changes the plugin
+will do a rerun.</p>
+
+<p>The purpose of this setting is to allow an easy workaround if the puppet catalog
+needs to run multiple times to fully reach the desired state. Usually this should
+be fixed in the puppet code and DOPi will display a warning if multiple reruns are
+required. Make sure you also set the max_rerun to allow for the desired amount of
+reruns.</p>
+
+<h3 id="rerun-on-error-optional">rerun_on_error (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>rerun_on_error</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.18.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>Similar to rerun_on_change, this setting allows for automatic reruns of puppet
+if the return value of the agent indicates that there where errors in the Puppet
+run or if there where error messages during the run.</p>
+
+<p>The purpose of this setting is to allow an easy workaround if there are for example
+still ordering errors on the catalog and a rerun will reach the desired state.
+DOPi will in all cases display a warning to indicate that a rerun happened.</p>
+
+<h3 id="max-rerun-optional">max_rerun (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>max_rerun</td>
+<td>&gt; 0</td>
+<td>1</td>
+<td>0.18.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>The maximum amount of puppet reruns the plugin will do if either &lsquo;rerun_on_error&rsquo; or
+&lsquo;rerun_on_change&rsquo; is true.</p>
+
+<h3 id="wait-if-already-running-optional">wait_if_already_running (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>wait_if_already_running</td>
+<td>true,false</td>
+<td>true</td>
+<td>0.18.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>If true, the plugin will wait if puppet is already running on the instance. This is
+often the case if puppet runs as part of the deployment or if the agent is running
+in daemon mode.
+
+<h3 id="arguments-optional">arguments (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>arguments</td>
+<td>String,Hash,Array</td>
+<td>&rdquo;&rdquo;</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The arguments for the command. This can be set by a string as an array or
+as a hash. All the elements of the hash and the array will be flattened
+and joined with a space.</p>
+
+<p>The following examples will result all in the same arguments string:</p>
+
+<pre><code>arguments: &quot;--name foo -s somearg&quot;
+
+arguments:
+  '--name': 'foo'
+  '-s':
+  'somearg':
+
+arguments:
+  - '--name foo'
+  - '-s'
+  - 'somearg'
+</code></pre>
+
+
+<h3 id="env-optional">env (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>arguments</td>
+<td>Hash</td>
+<td>{ DOP_NODE_FQDN =&gt; fqdn_of_node }</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>The environment variables that should be set in the context of the command. Additional
+variables can be defined in a hash which will be merged with the default.</p>
 
 <p>Example:</p>
 
-<pre><code>name: 'my_plan'
-include: '/etc/dop_deployments/credentials.yaml'
-include: '/etc/dop_deployments/infrastructure.yaml'
-include: 'nodes.yaml'
-
-steps:
-  default:
-    include: 'openstack_deploy_steps.yaml'
-  patch:
-    include: '/etc/dop_deployments/generic_patch_maintenance_steps.yaml'
+<pre><code>env:
+  PATH: '/usr/bin:/bin'
+  FOO:  'bar'
 </code></pre>
 
-<p>The file path can either be a relative or an absolute path. Relative paths mean
-that the preprocessor will look for the file relative to the path of the file
-which is including it. Included files can itself include files.</p>
 
-<p>The content of the included file will be placed at the position where the include
-statement begins with the exact same identation for every line.</p>
+<h3 id="parse-output-optional">parse_output (optional)</h3>
 
-<p>It is important to note, that since the pre-processor is running before the YAML
-parser, that in case of DOPc all the files must be on the client side. It is not
-possible to reference files on the DOPc server side. The DOPc client always has
-to send a completely rendered plan to the server.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
 
-<p>In order to test the result localy you can show the result of the pre-processor
-with the following command:</p>
+<tbody>
+<tr>
+<td>parse_output</td>
+<td>Hash</td>
+<td>{}</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
 
-<pre><code>dopc-client render path/to/my/plan.yaml
+<p>Here you can define patterns that match against the output of the command plugin
+and flag certain lines as errors or warnings. The parse_output key should contain
+a hash with two keys, &lsquo;error&rsquo; and &lsquo;warning&rsquo; which each can contain an array of
+regular expressions.</p>
+
+<p>To for example flag all lines starting with &ldquo;Error:&rdquo; as errors define:</p>
+
+<pre><code>parse_output:
+  error:
+    - &quot;^Error&quot;
+</code></pre>
+
+<h3 id="fail-on-warning-optional">fail_on_warning (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>fail_on_warning</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Set this to true if you want to threat warnings in the output as errors. This is
+useful if the plugin already specifies the parsing patterns but your need to stop
+the run on warnings.
+</p>
+
+<h2 id="connector-parameters">Connector Parameters</h2>
+
+<p><h3 id="check-host-key-optional">check_host_key (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>check_host_key</td>
+<td>true,false</td>
+<td>false</td>
+<td>0.12.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>By default the ssh connector  will skip the host key checks. This
+means you will be potentially vulnerable to man in the middle attacks. Since
+DOPi is designed for the provisioning phase you are working with new nodes and
+this will usually not be an issue, however changing keys because nodes get
+new provisioned will be.</p>
+
+<h3 id="quiet-optional">quiet (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>quiet</td>
+<td>true,false</td>
+<td>true</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>By default ssh will run in quiet mode and stuff like login banners will not
+appear in the output. See the documentation about the &ldquo;-q&rdquo; flag in the ssh
+man page for more information about this.</p>
+
+<h3 id="port-optional">port (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>port</td>
+<td>Numeric</td>
+<td>22</td>
+<td>0.10</td>
+</tr>
+</tbody>
+</table>
+
+<p>The port to which ssh should connect</p>
+
+<h3 id="base64-optional">base64 (optional)</h3>
+
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Allowed Values</th>
+<th>Default</th>
+<th>Since Version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>base64</td>
+<td>true,false</td>
+<td>true</td>
+<td>0.12</td>
+</tr>
+</tbody>
+</table>
+
+<p>This will encode the command with base64 before it is added to the commandline
+for the ssh call. This allows to pass complex multiline scripts to the node.</p>
+
+<p>This option is only here for legacy reasons and has usually no use.
+</p>
+
+<h2 id="examples">Examples:</h2>
+
+<h3 id="simple-example">Simple Example</h3>
+
+<pre><code>- name &quot;Run puppet in noop mode&quot;
+  nodes:
+    - 'web01.example.com'
+  command:
+    plugin: 'ssh/puppet_agent_run'
+    arguments: '--noop'
+</code></pre>
+
+<h3 id="complete-example">Complete Example</h3>
+
+<pre><code>- name &quot;Run Puppet until there are no errors and changes anymore&quot;
+  nodes:
+    - 'web01.example.com'
+  command:
+    plugin: 'ssh/puppet_agent_run'
+    rerun_on_change: true
+    rerun_on_error: true
+    max_rerun: 10
 </code></pre>
 
 
