@@ -499,11 +499,11 @@ thick provision a disk.</li>
 
 <li><p><strong><em>credentials</em></strong> - an optional property to define credentials for
 administrator user (root, Administrator). This information is passed to
-the customization tool (cloud-init, VSphere customization, etc.). Following
+the customization tool (cloud-init, VSphere-based windows-guests customization, etc.). Following
 data can be specified:</p>
 
 <ul>
-<li><strong><em>root_password</em></strong> - super user password that is set for cloud init phase,</li>
+<li><strong><em>root_password</em></strong> - super user password that is set for cloud init phase (not supported in VSphere).</li>
 <li><strong><em>root_ssh_keys</em></strong> - an array of OpenSSH public keys that are recorded
 into <code>/root/.ssh/authorized_keys</code> by cloud init.</li>
 <li><strong><em>administrator_password</em></strong> - an optional property that specifies the
