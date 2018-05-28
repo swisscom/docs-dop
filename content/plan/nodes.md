@@ -236,6 +236,11 @@ a property name is actually a keyword of a node hash.
 
      __IMPORTANT__: Do not use this property for other cloud provider types than VSphere.
 
+ 18. __*tags*__ - a optional, VSphere-specific, property that instructs the VSphere provider
+     to associate the given node with the listed tags
+
+     __IMPORTANT__: Do not use this property for other cloud provider types than VSphere. Requires minimum version 6.0.0 of VSphere. Raises an error if the tag does not exist.
+
 The example bellow shows a specification for a database backend and a web node:
 
     nodes:
