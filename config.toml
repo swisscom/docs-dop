@@ -1,11 +1,13 @@
-languageCode = "en-us"
+languageCode = 'en-US'
+defaultContentLanguage = 'en-US'
 title = "DOP Deploment Orchestrator for Puppet"
 baseurl = "https://swisscom.github.io/docs-dop/"
 
 themesdir = "themes"
 theme = "hugo-theme-learn"
 
-publishDir='docs'
+staticDir = 'docs'
+publishDir = 'docs'
 
 [params]
   # Activate search. Don't forget to generate the JSON index file (go check get started page)

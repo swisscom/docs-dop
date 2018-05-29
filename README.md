@@ -4,7 +4,7 @@ https://swisscom.github.io/docs-dop/overview/
 
 This is the DOP documentation/website. The static content is created with hugow which can be downloaded here: https://gohugo.io
 
-The currently used version is 0.20.
+The currently used version is 0.41.
 
 ## Compile the site
 
