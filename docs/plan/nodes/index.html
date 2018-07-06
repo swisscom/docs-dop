@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.41" />
+    <meta name="generator" content="Hugo 0.42.2" />
     <meta name="description" content="">
 
 
@@ -12,17 +12,17 @@
     <title>Nodes :: DOP Deploment Orchestrator for Puppet</title>
     
     
-    <link href="/docs-dop/css/nucleus.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/font-awesome.min.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/hybrid.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/featherlight.min.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/perfect-scrollbar.min.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/auto-complete.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/theme.css?1527590418" rel="stylesheet">
-    <link href="/docs-dop/css/hugo-theme.css?1527590418" rel="stylesheet">
+    <link href="/docs-dop/css/nucleus.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/font-awesome.min.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/hybrid.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/featherlight.min.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/perfect-scrollbar.min.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/auto-complete.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/theme.css?1530868466" rel="stylesheet">
+    <link href="/docs-dop/css/hugo-theme.css?1530868466" rel="stylesheet">
     
 
-    <script src="/docs-dop/js/jquery-2.x.min.js?1527590418"></script>
+    <script src="/docs-dop/js/jquery-2.x.min.js?1530868466"></script>
     
     <style type="text/css">
       :root #header + #content > #left > #rlblock_left{ 
@@ -51,14 +51,14 @@
     <span data-search-clear=""><i class="fa fa-close"></i></span>
 </div>
 
-<script type="text/javascript" src="/docs-dop/js/lunr.min.js?1527590418"></script>
-<script type="text/javascript" src="/docs-dop/js/auto-complete.js?1527590418"></script>
+<script type="text/javascript" src="/docs-dop/js/lunr.min.js?1530868466"></script>
+<script type="text/javascript" src="/docs-dop/js/auto-complete.js?1530868466"></script>
 <script type="text/javascript">
     
         var baseurl = '\/docs-dop\/';
     
 </script>
-<script type="text/javascript" src="/docs-dop/js/search.js?1527590418"></script>
+<script type="text/javascript" src="/docs-dop/js/search.js?1530868466"></script>
 
     
   </div>
@@ -792,18 +792,18 @@ are used.</li>
 <li><p><strong><em>thin_clone</em></strong> - an optional, VSphere-specific boolean property that instructs the VSphere provider:</p>
 
 <ol>
-<li>To transform all disks from a template as thin provision (sparse) if set to <code>true</code>.</li>
-<li>To transform all disks from a template as thick provision (flat) if set to <code>false</code>.</li>
+<li><code>true</code>  converts every disk, that is inherited from template, to thin provision (sparse).</li>
+<li><code>false</code> converts every disk, that is inherited from template, to thick provision (flat).</li>
 </ol>
 
-<p>The default (unset) leaves disks as defined in given template (no explicit transformation).</p>
+<p><strong>IMPORTANT</strong>: The default (unset) converts every disk, that is inherited from template, to thin provision (sparse).</p>
 
-<p><strong>IMPORTANT</strong>: Do not use this property for other cloud provider types than VSphere.</p></li>
+<p><strong>NOTE</strong>: Do not use this property for other cloud provider types than VSphere.</p></li>
 
 <li><p><strong><em>tags</em></strong> - a optional, VSphere-specific, property that instructs the VSphere provider
  to associate the given node with the listed tags</p>
 
-<p><strong>IMPORTANT</strong>: Do not use this property for other cloud provider types than VSphere. Requires minimum version 6.0.0 of VSphere. Raises an error if the tag does not exist.</p></li>
+<p><strong>IMPORTANT</strong>: Do not use this property for other cloud provider types than VSphere. Requires minimum version 6.0.0 of VSphere. Raises an warning if the tag does not exist.</p></li>
 </ol>
 
 <p>The example bellow shows a specification for a database backend and a web node:</p>
@@ -1268,20 +1268,20 @@ are used.</li>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/docs-dop/js/clipboard.min.js?1527590418"></script>
-    <script src="/docs-dop/js/perfect-scrollbar.min.js?1527590418"></script>
-    <script src="/docs-dop/js/perfect-scrollbar.jquery.min.js?1527590418"></script>
-    <script src="/docs-dop/js/jquery.sticky.js?1527590418"></script>
-    <script src="/docs-dop/js/featherlight.min.js?1527590418"></script>
-    <script src="/docs-dop/js/html5shiv-printshiv.min.js?1527590418"></script>
-    <script src="/docs-dop/js/highlight.pack.js?1527590418"></script>
+    <script src="/docs-dop/js/clipboard.min.js?1530868466"></script>
+    <script src="/docs-dop/js/perfect-scrollbar.min.js?1530868466"></script>
+    <script src="/docs-dop/js/perfect-scrollbar.jquery.min.js?1530868466"></script>
+    <script src="/docs-dop/js/jquery.sticky.js?1530868466"></script>
+    <script src="/docs-dop/js/featherlight.min.js?1530868466"></script>
+    <script src="/docs-dop/js/html5shiv-printshiv.min.js?1530868466"></script>
+    <script src="/docs-dop/js/highlight.pack.js?1530868466"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/docs-dop/js/modernizr.custom.71422.js?1527590418"></script>
-    <script src="/docs-dop/js/learn.js?1527590418"></script>
-    <script src="/docs-dop/js/hugo-learn.js?1527590418"></script>
+    <script src="/docs-dop/js/modernizr.custom.71422.js?1530868466"></script>
+    <script src="/docs-dop/js/learn.js?1530868466"></script>
+    <script src="/docs-dop/js/hugo-learn.js?1530868466"></script>
 
-    <link href="/docs-dop/mermaid/mermaid.css?1527590418" type="text/css" rel="stylesheet" />
-    <script src="/docs-dop/mermaid/mermaid.js?1527590418"></script>
+    <link href="/docs-dop/mermaid/mermaid.css?1530868466" type="text/css" rel="stylesheet" />
+    <script src="/docs-dop/mermaid/mermaid.js?1530868466"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
