@@ -229,10 +229,10 @@ a property name is actually a keyword of a node hash.
      2. __*search_domains*__ - a list of valid domains.
 
  17. __*thin_clone*__ - an optional, VSphere-specific boolean property that instructs the VSphere provider:
-     1. To transform all disks from a template as thin provision (sparse) if set to `true`.
-     2. To transform all disks from a template as thick provision (flat) if set to `false`.
+     1. `true`  converts every disk, that is inherited from template, to thin provision (sparse).
+     2. `false` converts every disk, that is inherited from template, to thick provision (flat).
 
-     The default (unset) leaves disks as defined in given template (no explicit transformation).
+     The default (unset) converts every disk, that is inherited from template, to thin provision (sparse).
 
      __IMPORTANT__: Do not use this property for other cloud provider types than VSphere.
 
