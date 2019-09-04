@@ -229,8 +229,8 @@ a property name is actually a keyword of a node hash.
      2. __*search_domains*__ - a list of valid domains.
 
  17. __*thin_clone*__ - an optional, VSphere-specific boolean property that instructs the VSphere provider:
-     1. `true`  converts every disk, that is inherited from template, to thin provision (sparse).
-     2. `false` converts every disk, that is inherited from template, to thick provision (flat).
+     * `true`  converts every disk, that is inherited from template, to thin provision (sparse).
+     * `false` converts every disk, that is inherited from template, to thick provision (flat).
 
      __IMPORTANT__: The default (unset) converts every disk, that is inherited from template, to thin provision (sparse).
 
@@ -240,6 +240,10 @@ a property name is actually a keyword of a node hash.
      to associate the given node with the listed tags
 
      __IMPORTANT__: Do not use this property for other cloud provider types than VSphere. Requires minimum version 6.0.0 of VSphere. Raises an warning if the tag does not exist.
+
+ 19. __*force_stop*__ - an optional boolean property to force shutdown e.g. during undeploying.
+     It is `false` by default (graceful shutdown).
+
 
 The example bellow shows a specification for a database backend and a web node:
 
